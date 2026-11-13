@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% block title %}{% endblock %} · AM Process Atlas</title>
+<meta name="description" content="{% block description %}When to use each additive manufacturing process: 39 processes compared on detail, strength, cost, size, and materials, with a process picker and sourced references.{% endblock %}">
+{% if preview %}<meta name="robots" content="noindex">{% else %}<link rel="canonical" href="{{ site_url }}{{ page_file }}">{% endif %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AM Process Atlas">
+<meta property="og:title" content="{{ self.title() }} · AM Process Atlas">
+<meta property="og:description" content="{{ self.description() }}">
+<meta property="og:url" content="{{ site_url }}{{ page_file }}">
+<meta property="og:image" content="{{ site_url }}social.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="atlas.css">
+{% block head %}{% endblock %}
+</head>
+<body>
+{% if preview %}<div class="preview">Internal preview, not published</div>{% endif %}
+<nav class="top" aria-label="Site">
+  <a class="brand" href="index.html">AM Process Atlas</a>
+  <a class="l" href="index.html"{% if page == "index" %} aria-current="page"{% endif %}>Atlas</a>
+  <a class="l" href="compare.html"{% if page == "compare" or pair is defined %} aria-current="page"{% endif %}>Compare</a>
+  <a class="l" href="materials.html"{% if page == "materials" %} aria-current="page"{% endif %}>Materials</a>
+  <a class="l" href="calculator.html"{% if page == "calculator" %} aria-current="page"{% endif %}>Calculator</a>
+  <a class="l" href="landscape.html"{% if page == "landscape" %} aria-current="page"{% endif %}>Landscape</a>
+  <a class="l" href="events.html"{% if page == "events" %} aria-current="page"{% endif %}>Events</a>
+  <a class="l" href="methods.html"{% if page == "methods" %} aria-current="page"{% endif %}>Methods</a>
+  <a class="l" href="{{ repo }}">Code &amp; data</a>
+</nav>
+<div class="wrap">
+{% block body %}{% endblock %}
+</div>
+<footer class="foot"><div class="foot-in">
+  <span>Reviewed {{ reviewed }}. Built {{ built }}. Ratings follow the published <a href="methods.html#rubric">rubric</a>; every process lists its references.</span>
+  <span><a href="status.html">Data status</a>. Code MIT, data CC-BY-4.0. A personal project by Joshua Ritchey; views are his own.</span>
+</div></footer>
+{% if analytics_token and not preview %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ analytics_token }}"}'></script>{% endif %}
+</body>
+</html>

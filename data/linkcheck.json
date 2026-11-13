@@ -1,0 +1,59 @@
+{
+ "checked": "2026-11-11",
+ "n_ok": 127,
+ "n_blocked": 6,
+ "n_failed": 1,
+ "failed": [
+  {
+   "url": "https://fabrisonic.com/wp-content/uploads/2024/04/SonicLayer-7200-R4.pdf",
+   "status": "ConnectionError",
+   "used_by": [
+    "uam"
+   ]
+  }
+ ],
+ "blocked": [
+  {
+   "url": "https://3dprinting.com/metal/cold-metal-fusion-what-is-it",
+   "status": 403,
+   "used_by": [
+    "cmf"
+   ]
+  },
+  {
+   "url": "https://cobod.com/solution/bod2/specifications/",
+   "status": 454,
+   "used_by": [
+    "conc"
+   ]
+  },
+  {
+   "url": "https://doi.org/10.1126/science.aau7114",
+   "status": 403,
+   "used_by": [
+    "vol"
+   ]
+  },
+  {
+   "url": "https://www.3dsystems.com/3d-printers/prox-950",
+   "status": 403,
+   "used_by": [
+    "sla"
+   ]
+  },
+  {
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5457067/",
+   "status": 403,
+   "used_by": [
+    "bio"
+   ]
+  },
+  {
+   "url": "https://xometry.pro/en-eu/articles/dmls-design-tips/",
+   "status": 403,
+   "used_by": [
+    "lpbf"
+   ]
+  }
+ ]
+}

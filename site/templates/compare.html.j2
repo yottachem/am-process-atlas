@@ -1,0 +1,19 @@
+{% extends "base.html.j2" %}
+{% from "_side.html.j2" import side with context %}
+{% block title %}Compare processes{% endblock %}
+{% block description %}Compare up to four additive manufacturing processes side by side: price, feature, and size bands, ten ratings, materials, and vendors.{% endblock %}
+{% block body %}
+<div style="display:grid;gap:22px">
+<header class="head"><h1>Compare processes</h1>
+<p class="lede">Pick two to four processes. The link updates as you choose, so you can share a comparison.</p></header>
+
+<div class="panel cmp-ctl">
+  {% for i in range(4) %}<div class="ctl"><label for="c-{{ i }}">Process {{ i + 1 }}{% if i > 1 %} (optional){% endif %}</label><select id="c-{{ i }}"></select></div>{% endfor %}
+</div>
+<p class="sub">Common comparisons: {% for r in pairs %}<a href="{{ r.id }}.html">{{ r.title }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>
+
+<div id="c-out">{{ side(default) }}</div>
+</div>
+<script type="application/json" id="cmp-data">{{ payload|safe }}</script>
+<script src="compare.js"></script>
+{% endblock %}

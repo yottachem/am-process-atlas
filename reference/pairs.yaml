@@ -1,0 +1,72 @@
+# X-vs-Y pages. Each lists 2 or 3 process ids and a short intro on how the processes differ in mechanism.
+# Intros state process mechanics only (covered by each process's textbook-chapter reference); every comparison
+# number on the page is computed from processes.yaml. Never name or judge a vendor here.
+pairs:
+- id: sls-vs-mjf
+  title: SLS vs MJF
+  processes: [sls, mjf]
+  intro: Both fuse nylon powder in a heated bed, and the unfused powder supports the parts, so neither needs support
+    structures. SLS draws each layer with a laser. MJF jets a fusing agent and an edge-detailing agent onto each layer,
+    then fuses the whole layer under infrared lamps.
+- id: sla-vs-dlp-vs-msla
+  title: SLA vs DLP vs masked SLA
+  processes: [sla, dlp, msla]
+  intro: All three cure liquid photopolymer resin layer by layer and draw on the same resin families. They differ in
+    the light source. Laser SLA traces each layer with a laser spot, DLP projects the whole layer from a micromirror
+    chip, and masked SLA exposes the whole layer through an LCD screen.
+- id: fff-vs-sls
+  title: FFF vs SLS
+  processes: [fff, sls]
+  intro: FFF extrudes a thermoplastic filament along a toolpath and needs printed supports under overhangs. SLS
+    sinters powder in a bed that supports the parts as they build, so parts can be nested in three dimensions and
+    internal features need no supports.
+- id: fff-vs-sla
+  title: FFF vs SLA
+  processes: [fff, sla]
+  intro: These are the two most common ways to start printing in-house. FFF extrudes a thermoplastic filament. SLA
+    cures liquid resin with light, which gives finer detail and smoother surfaces but adds washing and post-curing.
+- id: polyjet-vs-sla
+  title: PolyJet vs SLA
+  processes: [polyjet, sla]
+  intro: Both build from photopolymer. PolyJet jets droplets of resin from print heads and cures them with UV lamps,
+    so one part can mix rigid, flexible, clear, and colored materials. SLA cures one resin from a vat with a laser.
+- id: mjf-vs-hss
+  title: MJF vs HSS / SAF
+  processes: [mjf, hss]
+  intro: Both fuse whole layers of polymer powder with infrared heat, using a printed fluid to mark where the part is.
+    MJF also prints a detailing agent at part edges. HSS and SAF print a single infrared-absorbing fluid.
+- id: lpbf-vs-mbj
+  title: Laser PBF vs metal binder jetting
+  processes: [lpbf, mbj]
+  intro: Laser PBF fully melts metal powder as it builds, so parts come off the plate dense but need supports and
+    stress relief. Metal binder jetting glues powder with a liquid binder and reaches density later in a sintering
+    furnace, so the design must allow for shrinkage.
+- id: lpbf-vs-ebm
+  title: Laser PBF vs EBM
+  processes: [lpbf, ebm]
+  intro: Both melt metal powder in a bed. EBM uses an electron beam in vacuum and keeps the bed hot during the build,
+    which lowers residual stress. Laser PBF uses a laser in inert gas and runs a wider range of alloys.
+- id: mbj-vs-lmm
+  title: Metal binder jetting vs LMM
+  processes: [mbj, lmm]
+  intro: Both shape a metal part held together by a binder, then remove the binder and sinter the part to density,
+    as in metal injection molding. Binder jetting glues powder layers with jetted binder. LMM cures a metal-filled
+    resin with light, which resolves much finer features.
+- id: waam-vs-ded
+  title: WAAM vs laser DED
+  processes: [waam, ded]
+  intro: Both deposit metal into a melt pool along a toolpath rather than in a powder bed. WAAM melts welding wire
+    with an electric arc for high deposition rates on large parts. Laser DED melts powder or wire with a laser for
+    thinner walls, repair, and cladding.
+- id: clip-vs-dlp
+  title: CLIP vs DLP
+  processes: [clip, dlp]
+  intro: Both project whole layers of light into resin from below. CLIP uses an oxygen-permeable window that keeps
+    a thin layer of resin uncured, so the part can rise continuously, and it uses dual-cure resins finished in an
+    oven.
+- id: lpbf-vs-bmfff
+  title: Laser PBF vs bound metal extrusion
+  processes: [lpbf, bmfff]
+  intro: Both make metal parts from powder. Laser PBF melts the powder in a bed. Bound metal extrusion prints a
+    polymer-bound metal filament or rod, then removes the binder and sinters the part, which needs only a desktop
+    printer and outsourced or in-house sintering.

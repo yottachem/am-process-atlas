@@ -1,0 +1,85 @@
+{% extends "base.html.j2" %}
+{% block title %}When to use each additive process{% endblock %}
+{% block body %}
+<header class="head">
+  <div class="eyebrow">Additive manufacturing · ISO/ASTM 52900 process families</div>
+  <h1>AM Process Atlas</h1>
+  <p class="lede">{{ processes|length }} additive manufacturing processes and when each one is the right call. Set your requirements to rank them, browse the full matrix, or map the landscape. Every process has its own page with references.</p>
+  <div class="meta"><span><b>Ratings</b> 1–5, higher is better for the buyer</span><span><b>Price, feature, size</b> shown as bands</span><span><b>Reviewed</b> {{ reviewed }}</span></div>
+  {% for c in claims.get("home", []) %}<p class="sub">{{ c.text }}</p>{% endfor %}
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Views">
+  <button role="tab" id="t-pick" data-v="pick" aria-selected="true">Pick a process</button>
+  <button role="tab" id="t-matrix" data-v="matrix" aria-selected="false">Process matrix</button>
+  <button role="tab" id="t-map" data-v="map" aria-selected="false">Landscape map</button>
+</nav>
+
+<section class="view" id="v-pick" role="tabpanel" aria-labelledby="t-pick">
+  <div class="grid2">
+    <div class="panel controls">
+      <div class="ctl"><label for="p-mat">Material</label><select id="p-mat"></select></div>
+      <div class="ctl"><span class="lbl">Quantity</span><div class="seg" id="p-qty"></div></div>
+      <div class="ctl"><label for="p-feat">Smallest feature needed</label><select id="p-feat"></select></div>
+      <div class="ctl"><label for="p-part">Largest part needed</label><select id="p-part"></select></div>
+      <div class="ctl"><label for="p-bud">System budget</label><select id="p-bud"></select></div>
+      <div class="ctl"><span class="lbl">Must have</span><div class="seg" id="p-caps"></div></div>
+      <div class="ctl"><span class="lbl">How much each factor matters (0–3)</span><div class="weights" id="p-w"></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="p-share" type="button">Copy link to these settings</button><button class="btn" id="p-reset" type="button">Reset weights</button></div>
+      <p class="sub">Score is the weighted average of the 1–5 ratings, scaled to 100. Quantity shifts weight toward system cost (prototype) or throughput and cost per part (production). Emerging and research processes take a small maturity discount.</p>
+    </div>
+    <div style="display:grid;gap:14px;min-width:0;align-content:start">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap"><h2>Best fits</h2><span class="count" id="p-count"></span></div>
+      <div class="results" id="p-res"></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3 style="margin-bottom:12px">Rules of thumb</h3>
+    <ul class="rules">
+      <li><b>Smooth, fine, small:</b> resin (masked SLA, DLP, laser SLA). Print time scales with height, not part count.</li>
+      <li><b>Functional nylon, no supports, many parts per build:</b> SLS, MJF, or HSS/SAF. Infrared and jetted-agent systems lead on cost per part at volume; laser sintering on entry price and material range.</li>
+      <li><b>Cheapest iteration and jigs:</b> desktop FFF. Do not load it across layers.</li>
+      <li><b>Multi-material or full-color realism:</b> PolyJet. Expensive per part and weak mechanically.</li>
+      <li><b>Dense metal with internal channels:</b> laser powder bed fusion. Budget for powder handling, HIP, and machining.</li>
+      <li><b>Thousands of small metal parts:</b> metal binder jetting or lithography metal, as MIM replacements without tooling.</li>
+      <li><b>Meter-scale:</b> pellet extrusion for polymer, WAAM or DED for metal, sand binder jetting for cast parts.</li>
+      <li><b>Sub-10 µm features:</b> two-photon or projection micro-SLA. Everything else bottoms out near 25–50 µm.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="view" id="v-matrix" role="tabpanel" aria-labelledby="t-matrix" hidden>
+  <div class="row-filters">
+    <div class="ctl wide"><label for="m-q">Search</label><input type="search" id="m-q" placeholder="Process, material, vendor, application"></div>
+    <div class="ctl"><label for="m-fam">Family</label><select id="m-fam"></select></div>
+    <div class="ctl"><label for="m-mat">Maturity</label><select id="m-mat"></select></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+    <span class="count" id="m-count"></span>
+    <div class="hlegend">Rating <span class="sw h1"></span>1 <span class="sw h2"></span>2 <span class="sw h3"></span>3 <span class="sw h4"></span>4 <span class="sw h5"></span>5 · click a header to sort · <a href="processes.csv">CSV</a> · <a href="atlas.json">JSON</a></div>
+  </div>
+  <div class="tframe"><table class="matrix" id="m-tbl">
+    <noscript><thead><tr><th>Process</th><th>Family</th>{% for k, d in rubric.items() %}<th>{{ d.label }}</th>{% endfor %}</tr></thead><tbody>
+    {% for p in processes %}<tr><td class="nm"><a href="{{ p.id }}.html">{{ p.name }}</a></td><td>{{ families[p.family].code }}</td>{% for k in rubric %}<td class="h"><span class="h{{ p.ratings[k] }}">{{ p.ratings[k] }}</span></td>{% endfor %}</tr>{% endfor %}
+    </tbody></noscript>
+  </table></div>
+  <p class="note">Ratings compare each process against the whole field of additive processes, not vendor specifications. See the <a href="methods.html#rubric">rubric</a> for what each level means.</p>
+</section>
+
+<section class="view" id="v-map" role="tabpanel" aria-labelledby="t-map" hidden>
+  <div class="row-filters">
+    <div class="ctl"><label for="x-ax">X axis</label><select id="x-ax"></select></div>
+    <div class="ctl"><label for="y-ax">Y axis</label><select id="y-ax"></select></div>
+    <div class="ctl"><label for="g-fam">Highlight family</label><select id="g-fam"></select></div>
+  </div>
+  <div class="mapbox" id="mapbox">
+    <div class="legend"><span class="mat mature">Mature</span><span class="mat industrial">Industrial or niche</span><span class="mat emerging">Emerging or research</span></div>
+    <svg id="map-svg" role="img" aria-label="Additive processes placed by the two selected attributes"></svg>
+    <div class="tip" id="tip" hidden></div>
+  </div>
+  <p class="note">Both axes are bands or 1–5 ratings, so processes sharing a cell are spread on a small grid. Click a dot to open the process. The Process matrix tab is the table view of this chart. Service-only processes have no entry price and drop out of price views.</p>
+</section>
+
+<script type="application/json" id="atlas-data">{{ payload|safe }}</script>
+<script src="atlas.js"></script>
+{% endblock %}

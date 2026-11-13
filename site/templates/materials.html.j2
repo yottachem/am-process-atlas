@@ -1,0 +1,54 @@
+{% extends "base.html.j2" %}
+{% block title %}Materials explorer{% endblock %}
+{% block description %}Tensile strength, modulus, elongation, and heat deflection of {{ grades|length }} additive manufacturing material grades, read from public technical data sheets, with test standard and print orientation for every value.{% endblock %}
+{% block body %}
+<div style="display:grid;gap:22px">
+<header class="head"><h1>Materials explorer</h1>
+<p class="lede">{{ grades|length }} printed material grades across {{ payload_procs }} processes, each read from the vendor's public technical data sheet. Pick the properties to plot, then filter by process, use, or material class.</p></header>
+
+<div class="caveat"><b>Data sheet values are not directly comparable across vendors.</b> Each vendor picks its own test standard, specimen, print orientation, and post-processing. Every point and row shows the standard, orientation, and condition it was measured under; check those before comparing two grades. <a href="methods.html#materials">How values were read</a>.</div>
+
+<div class="panel row-filters" id="m-ctl">
+  <div class="ctl"><label for="m-x">X axis</label><select id="m-x"></select></div>
+  <div class="ctl"><label for="m-y">Y axis</label><select id="m-y"></select></div>
+  <div class="ctl"><span class="lbl" id="m-o-l">Direction</span><div class="seg" id="m-o" role="group" aria-labelledby="m-o-l"><button class="chip" data-v="xy" aria-pressed="true">In-plane</button><button class="chip" data-v="z" aria-pressed="false">Build direction (Z)</button></div></div>
+  <div class="ctl"><label for="m-p">Process</label><select id="m-p"></select></div>
+  <div class="ctl"><label for="m-u">Use</label><select id="m-u"></select></div>
+  <div class="ctl wide"><span class="lbl" id="m-c-l">Material class</span><div class="seg" id="m-c" role="group" aria-labelledby="m-c-l">{% for c, l in class_labels.items() %}<button class="chip" data-v="{{ c }}" aria-pressed="true">{{ l }}</button>{% endfor %}</div></div>
+</div>
+
+<section style="display:grid;gap:8px">
+  <div class="legend" aria-hidden="true">{% for c, l in class_labels.items() %}<span class="mleg"><svg width="14" height="14" viewBox="-7 -7 14 14"><use href="#sh-{{ c }}" fill="var(--c-{{ c }})"/></svg>{{ l }}</span>{% endfor %}<span class="mleg"><svg width="22" height="14" viewBox="-11 -7 22 14"><line x1="-10" x2="10" y1="0" y2="0" stroke="var(--ink-3)" stroke-width="1.5"/><circle r="4" fill="var(--ink-3)"/></svg>Published range (point at midpoint)</span></div>
+  <div class="mapbox" id="m-box">
+    <svg id="m-svg" role="img" aria-label="Scatter plot of material grades" viewBox="0 0 900 520"><defs>
+      <circle id="sh-polymer" r="5.5"/>
+      <path id="sh-elastomer" d="M0-6.6L6.2 4.2H-6.2Z"/>
+      <path id="sh-composite" d="M0-6.6L6.6 0L0 6.6L-6.6 0Z"/>
+      <rect id="sh-metal" x="-5" y="-5" width="10" height="10"/>
+    </defs></svg>
+    <noscript><p class="sub" style="padding:10px">The chart needs JavaScript. Every value is in the table below.</p></noscript>
+    <div class="tip" id="m-tip" hidden></div>
+  </div>
+  <p class="count" id="m-count" aria-live="polite"></p>
+</section>
+
+<section style="display:grid;gap:10px"><h2>All grades</h2>
+<p class="sub">Values read as in-plane / Z where the sheet gives both. Tensile strength is the ultimate value (the larger of yield and break). Modulus in GPa. A dash means the sheet does not publish that value. Grouped by the use the vendor sells each grade for; dental and biomedical grades are listed for their mechanical data only, not as a statement about clearance for any device. Click a point to jump to its row.</p>
+<div class="tframe"><table class="mtbl"><thead><tr><th>Grade</th><th>Process</th><th>Class</th><th>Tensile, MPa</th><th>Modulus, GPa</th><th>Elongation, %</th><th>HDT 0.45 MPa, °C</th><th>Standard</th><th>Orientation</th><th>Condition</th><th>Source</th></tr></thead>
+{% for u, ul in use_labels.items() %}{% set rows = grades|selectattr("use", "equalto", u)|sort(attribute="grade") %}{% if rows %}
+<tbody data-u="{{ u }}"><tr class="grp"><th colspan="11"><span>{{ ul }} <span class="sub">{{ rows|length }} grades</span></span></th></tr>
+{% for m in rows %}<tr id="g-{{ m.id }}" data-p="{{ m.process }}" data-c="{{ m.class }}">
+<td class="nm">{{ m.grade }}<div class="sub">{{ m.vendor }} · {{ m.base }}</div></td>
+<td><a href="{{ m.process }}.html">{{ process_names[m.process] }}</a></td>
+<td><span class="mcls" style="--c:var(--c-{{ m.class }})">{{ class_labels[m.class] }}</span></td>
+<td class="band">{{ cell(m, "uts") }}</td><td class="band">{{ cell(m, "mod") }}</td><td class="band">{{ cell(m, "elong") }}</td><td class="band">{{ cell(m, "hdt") }}</td>
+<td>{{ m.standard }}</td><td>{{ m.orientation }}</td><td>{{ m.condition }}</td>
+<td><a href="{{ m.tds_url }}" rel="noopener">{{ m.doc }}</a></td></tr>
+{% endfor %}</tbody>{% endif %}{% endfor %}</table></div>
+{% if unavailable %}<p class="sub">Unavailable: {% for m in unavailable %}{{ m.grade }} ({{ m.vendor }}){% if not loop.last %}, {% endif %}{% endfor %}. The vendor no longer serves a data sheet for these grades, so they are not plotted.</p>{% endif %}
+<p class="sub">Read from vendor data sheets on {{ grades|map(attribute="as_of")|max }}. Vendors revise sheets; the linked sheet is the authority. Download: <a href="materials.csv">materials.csv</a> (modulus in MPa, as published).</p>
+</section>
+</div>
+<script type="application/json" id="mat-data">{{ payload|safe }}</script>
+<script src="materials.js"></script>
+{% endblock %}

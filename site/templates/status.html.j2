@@ -1,0 +1,39 @@
+{% extends "base.html.j2" %}
+{% block title %}Status{% endblock %}
+{% block description %}Data status for the AM Process Atlas: review dates, sourcing coverage, checked statements, and the weekly link check.{% endblock %}
+{% block body %}
+<div style="display:grid;gap:26px">
+<header class="head"><h1>Status</h1>
+<p class="lede">How current the data is and whether its sources still resolve.</p></header>
+
+<section style="display:grid;gap:10px"><h2>Data</h2>
+<div class="tframe" style="max-width:560px"><table><tbody>
+<tr><td>Last full editorial review</td><td class="band">{{ reviewed }}</td></tr>
+<tr><td>Last build</td><td class="band">{{ built }}</td></tr>
+{% for label, v in coverage %}<tr><td>{{ label }}</td><td class="band">{{ v }}</td></tr>{% endfor %}
+</tbody></table></div></section>
+
+<section style="display:grid;gap:10px"><h2>Checked statements</h2>
+<p class="sub">Each summary sentence is re-checked against the data on every build (see <a href="methods.html#claims">methods</a>).</p>
+<div class="tframe"><table><thead><tr><th>Statement</th><th>Page</th><th>Holds</th></tr></thead><tbody>
+{% for page, cs in claims.items() %}{% for c in cs %}<tr><td>{{ c.text }}</td><td>{{ page }}</td><td class="band">{{ "yes" if c.holds else "under review" }}</td></tr>{% endfor %}{% endfor %}
+</tbody></table></div></section>
+
+<section style="display:grid;gap:10px"><h2>Events feed</h2>
+<p class="sub">Last run per source. {{ feed.watched }} companies watched; {{ feed.open }} item{{ "" if feed.open == 1 else "s" }} waiting for review. See <a href="methods.html#events">methods</a>.</p>
+<div class="tframe"><table><thead><tr><th>Source</th><th>Last run</th><th>Found</th><th>Kept or queued</th><th>Errors</th></tr></thead><tbody>
+{% for r in feed.runs %}<tr><td>{{ r.label }}</td>{% if r.at %}<td class="band">{{ r.at }}</td>
+{% if r.auto is defined %}<td class="band">{{ r.auto + r.dup + r.queued }} candidates</td><td class="band">{{ r.auto }} auto, {{ r.queued }} queued, {{ r.dup }} duplicates</td><td class="band">0</td>
+{% else %}<td class="band">{{ r.fetched }}</td><td class="band">{{ r.kept }}</td><td class="band">{{ r.errors }}{% if r.errors %} <span class="sub">({{ r.error_sample|join("; ") }})</span>{% endif %}</td>{% endif %}
+{% else %}<td class="band" colspan="4">Not run yet</td>{% endif %}</tr>
+{% endfor %}</tbody></table></div></section>
+
+<section style="display:grid;gap:10px"><h2>Link check</h2>
+{% if linkcheck %}<p class="sub">Checked {{ linkcheck.checked }}: {{ linkcheck.n_ok }} resolve, {{ linkcheck.n_blocked }} refuse automated requests (reviewed by hand), {{ linkcheck.n_failed }} failed.</p>
+{% if linkcheck.failed %}<div class="tframe"><table><thead><tr><th>URL</th><th>Result</th><th>Cited by</th></tr></thead><tbody>
+{% for r in linkcheck.failed %}<tr><td style="word-break:break-all"><a href="{{ r.url }}" rel="noopener">{{ r.url }}</a></td><td class="band">{{ r.status }}</td><td>{{ r.used_by|join(", ") }}</td></tr>{% endfor %}
+</tbody></table></div>{% endif %}
+{% else %}<p class="sub">No link check has run yet.</p>{% endif %}
+</section>
+</div>
+{% endblock %}

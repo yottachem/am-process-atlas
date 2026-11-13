@@ -1,0 +1,1979 @@
+# Additive processes. One entry per process; ratings follow reference/rubric.yaml (detail, size and system_cost
+# are derived from bands, so they are not stored here). Bands are defined in reference/bands.yaml.
+# refs: each lists which fields it supports. verify lists open questions from the sourcing pass, one per line as
+# "field: reason"; estimated names bands with no published figure (shown as "estimate"); band_notes add
+# context shown under a band; LAUNCH_GATE=1 pytest fails while any remain or any process has no refs.
+processes:
+- id: sla
+  name: Laser SLA
+  aka: Stereolithography, galvo laser
+  family: vpp
+  maturity: mature
+  materials:
+  - polymer
+  - elastomer
+  - casting
+  capabilities:
+  - biocompatible
+  - flame_retardant
+  - transparent
+  material_text: 'Photopolymer resins: standard, tough, flexible, castable, clear, biocompatible, high-temp, ceramic-filled'
+  bands:
+    system_price: 1k-10k
+    min_feature: 50-200um
+    max_part: 1-3m
+  band_notes:
+    system_price: Set by the Form 3+, which is being phased out and sold from remaining stock and reconditioned units.
+      Laser SLA is two markets, desktop and industrial frame; the industrial systems cost far more.
+  ratings:
+    surface: 5
+    strength: 3
+    throughput: 2
+    materials: 4
+    cost_per_part: 3
+    workflow: 3
+    freedom: 3
+  choose: Smooth, accurate prototypes and masters; large single resin parts on industrial frames; clear and optical parts;
+    investment-casting patterns.
+  avoid: Outdoor or UV-exposed end use, high-impact loads, high per-machine production volume.
+  applications: Fit and form prototypes, QuickCast patterns, microfluidic chips, wind-tunnel models.
+  vendors_text: 3D Systems (ProX 800, ProX 950, SLA 750), Formlabs (Form 3+, Form 3L), Stratasys (Neo), UnionTech.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Vat Photopolymerization'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: How to design for 3D printed parts on the Form 3
+    url: https://formlabs.com/blog/design-guide-form3/
+    publisher: Formlabs
+    supports:
+    - min_feature
+    note: 0.1 mm embossed detail, 0.2 mm supported wall
+  - title: ProX 950 SLA printer
+    url: https://www.3dsystems.com/3d-printers/prox-950
+    publisher: 3D Systems
+    supports:
+    - max_part
+    note: 1500 mm longest axis
+  - title: Formlabs Form 3+ review
+    url: https://www.tomsguide.com/reviews/formlabs-form-3-plus-3d-printer
+    publisher: Tom's Guide
+    supports:
+    - system_price
+    note: Reported $3,499, later $3,750
+  - title: 'The Form 4 printer upgrade: Formlabs discontinue Form 3'
+    url: https://www.additive-x.com/blog/the-form-4-printer-upgrade-formlabs-discontinue-form-3
+    publisher: Additive-X (reseller)
+    supports:
+    - system_price
+    note: Form 3+ being phased out
+  - &id001
+    title: Flame Retardant Resin
+    url: https://formlabs.com/products/flame-retardant-resin/
+    publisher: Formlabs
+    supports:
+    - capabilities
+    note: UL 94 V-0 at 3 mm; runs on laser SLA (Form 3) and MSLA (Form 4) systems
+  verify: []
+- id: msla
+  name: Masked SLA / LCD
+  aka: MSLA, LCD, LFD (low force display)
+  family: vpp
+  maturity: mature
+  materials:
+  - polymer
+  - elastomer
+  - casting
+  capabilities:
+  - biocompatible
+  - flame_retardant
+  - transparent
+  material_text: 'Same resin families as SLA: standard, tough, flexible, castable, clear, biocompatible, high-temp; open-material
+    modes on many printers'
+  bands:
+    system_price: lt1k
+    min_feature: 50-200um
+    max_part: 300mm-1m
+  ratings:
+    surface: 4
+    strength: 3
+    throughput: 3
+    materials: 4
+    cost_per_part: 4
+    workflow: 3
+    freedom: 3
+  choose: Highest detail per dollar. Whole-layer exposure means time depends on height, not part count. Dental, jewelry,
+    miniatures, small precise parts.
+  avoid: Parts larger than about 350 mm; sustained mechanical load; temperatures above the resin HDT.
+  applications: Dental models and splints, prototypes, jigs, jewelry, miniatures, microfluidics.
+  vendors_text: Anycubic, Elegoo, Formlabs, HeyGears, Phrozen, Prusa (SL1S), UniFormation.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Vat Photopolymerization'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Form 4 design guide
+    url: https://formlabs.com/blog/design-guide-form4
+    publisher: Formlabs
+    supports:
+    - min_feature
+  - title: Elegoo Saturn 4 Ultra review
+    url: https://makezine.com/article/digital-fabrication/3d-printing-workshop/3d-printer-review-elegoo-saturn-4-ultra
+    publisher: 'Make:'
+    supports:
+    - system_price
+    note: Launched at $399
+  - title: Form 4L Complete Package
+    url: https://formlabs.com/products/form-4l-complete-package/
+    publisher: Formlabs
+    supports:
+    - max_part
+    note: 353 mm longest axis
+  - *id001
+  verify: []
+- id: dlp
+  name: DLP projection
+  aka: Digital light processing
+  family: vpp
+  maturity: mature
+  materials:
+  - polymer
+  - elastomer
+  - casting
+  capabilities:
+  - biocompatible
+  - transparent
+  material_text: Photopolymers, often open-material with vendor-validated profiles
+  bands:
+    system_price: 1k-10k
+    min_feature: 50-200um
+    max_part: 300mm-1m
+  ratings:
+    surface: 4
+    strength: 3
+    throughput: 3
+    materials: 4
+    cost_per_part: 3
+    workflow: 3
+    freedom: 3
+  choose: Validated production workflows (dental, hearing aids), open materials with tight process control, fast small
+    batches.
+  avoid: Large flat cross-sections (projector pixels spread over the build area), tight budgets.
+  applications: Dental appliances, hearing-aid shells, connectors, jewelry.
+  vendors_text: 3D Systems (Figure 4), Asiga, ETEC/EnvisionTEC, Rapid Shape, SprintRay, Stratasys (Origin, P3).
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Vat Photopolymerization'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Asiga MAX brochure
+    url: https://cdn.shopify.com/s/files/1/0715/3310/1367/files/Asiga-MAX-usen-web.pdf
+    publisher: Asiga
+    supports:
+    - min_feature
+    note: 62 µm pixel
+  - title: Asiga MAX 2
+    url: https://voxeldental.com/products/asiga-max-2
+    publisher: Voxel Dental (reseller)
+    supports:
+    - system_price
+    note: $9,990 list
+  - title: Origin Two printer
+    url: https://www.stratasys.com/uk/3d-printers/printer-catalog/p3-dlp/origin-two-printer/
+    publisher: Stratasys
+    supports:
+    - max_part
+    note: 370 mm longest axis
+  verify: []
+- id: clip
+  name: CLIP / DLS
+  aka: Continuous liquid interface production
+  family: vpp
+  maturity: industrial
+  materials:
+  - polymer
+  - elastomer
+  capabilities:
+  - biocompatible
+  material_text: 'Dual-cure resins: EPU elastomers, RPU, EPX, CE, dental'
+  bands:
+    system_price: 10k-100k
+    min_feature: 50-200um
+    max_part: 300mm-1m
+  band_notes:
+    system_price: Sold as a subscription, not a purchase; the band uses one year of subscription (about $25,000).
+  ratings:
+    surface: 5
+    strength: 4
+    throughput: 4
+    materials: 3
+    cost_per_part: 3
+    workflow: 3
+    freedom: 3
+  choose: Production elastomer lattices (midsoles, helmet liners, saddles); dual-cure engineering resins with near-isotropic
+    properties; serial production.
+  avoid: Low volume where the subscription dominates cost; large parts.
+  applications: Shoe midsoles, helmet liners, bike saddles, dental.
+  vendors_text: Carbon (L1, M2, M3). Sold as a subscription.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Vat Photopolymerization'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Carbon's M3, M3 Max designed for faster, larger, smoother DLS printing
+    url: https://additivemanufacturing.media/products/carbons-m3-m3-max-designed-for-faster-larger-smoother-dls-printing-
+    publisher: Additive Manufacturing
+    supports:
+    - min_feature
+    - max_part
+    note: 75 µm XY pixel; M3 Max 326 mm longest axis
+  - title: Carbon products
+    url: https://carbon3D.com/products
+    publisher: Carbon
+    supports:
+    - system_price
+    note: Subscriptions from about $25,000 a year (reported)
+  verify: []
+- id: tpp
+  name: Two-photon polymerization
+  aka: 2PP, direct laser writing
+  family: vpp
+  maturity: research
+  materials:
+  - polymer
+  capabilities:
+  - biocompatible
+  - transparent
+  material_text: Specialty photoresists, hybrid organic-inorganic, hydrogels
+  bands:
+    system_price: 100k-500k
+    min_feature: lt10um
+    max_part: lt100mm
+  estimated:
+  - system_price
+  ratings:
+    surface: 5
+    strength: 1
+    throughput: 1
+    materials: 1
+    cost_per_part: 1
+    workflow: 2
+    freedom: 4
+  choose: 'Sub-micron features: micro-optics, mechanical metamaterials, cell scaffolds, microneedles, photonics.'
+  avoid: Anything larger than a few mm in reasonable time.
+  applications: Fiber-tip optics, micro-lenses, metamaterials, biomedical scaffolds.
+  vendors_text: Heidelberg Instruments, Microlight3D, Nanoscribe, UpNano.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Vat Photopolymerization'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Quantum X shape
+    url: https://www.nanoscribe.com/en/products/quantum-x-shape/
+    publisher: Nanoscribe
+    supports:
+    - min_feature
+    - max_part
+    note: Features to about 100 nm; 50 x 50 mm print area
+  verify: []
+- id: pusl
+  name: Projection micro-SLA
+  aka: PµSL
+  family: vpp
+  maturity: niche
+  materials:
+  - polymer
+  - ceramic
+  capabilities: []
+  material_text: Rigid and tough micro-resins, ceramic-filled resins
+  bands:
+    system_price: 100k-500k
+    min_feature: 10-50um
+    max_part: 100-300mm
+  estimated:
+  - system_price
+  ratings:
+    surface: 4
+    strength: 2
+    throughput: 1
+    materials: 2
+    cost_per_part: 2
+    workflow: 2
+    freedom: 3
+  choose: 'Micro-scale features (2–25 µm) on cm-scale parts: microfluidics, micro-connectors, medical micro-devices.'
+  avoid: Parts above about 100 mm; cost-sensitive prototyping.
+  applications: Microfluidic chips, endoscope parts, connectors, MEMS packaging.
+  vendors_text: Boston Micro Fabrication (microArch).
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Vat Photopolymerization'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: BMF reveals the microArch S240
+    url: https://bmf3d.com/news/bmf-reveals-the-microarch-s240/
+    publisher: Boston Micro Fabrication
+    supports:
+    - min_feature
+    - max_part
+    note: 10 µm resolution; 100 mm longest axis
+  verify: []
+- id: vol
+  name: Volumetric printing
+  aka: Tomographic (CAL), xolography
+  family: vpp
+  maturity: emerging
+  materials:
+  - polymer
+  - bio
+  capabilities:
+  - support_free
+  - transparent
+  material_text: Low-absorbance resins, hydrogels
+  bands:
+    system_price: 100k-500k
+    min_feature: 50-200um
+    max_part: lt100mm
+  estimated:
+  - system_price
+  ratings:
+    surface: 4
+    strength: 2
+    throughput: 4
+    materials: 1
+    cost_per_part: 2
+    workflow: 2
+    freedom: 5
+  choose: Support-free soft or overhang-heavy parts in seconds to minutes; overprinting around existing objects; cell-laden
+    hydrogels.
+  avoid: Opaque or highly absorbing resins, large parts, production.
+  applications: Hydrogel tissue constructs, soft optics, research.
+  vendors_text: Readily3D, xolo, academic CAL systems.
+  refs:
+  - title: Volumetric additive manufacturing via tomographic reconstruction
+    url: https://doi.org/10.1126/science.aau7114
+    publisher: Science (Kelly et al.)
+    supports:
+    - process
+    year: 2019
+  - title: '#3DStartup: Readily3D and its volumetric printing technology'
+    url: https://www.3dnatives.com/en/3dstartup-readily3d-volumetric-printing-technology-tomography-100620214/
+    publisher: 3Dnatives
+    supports:
+    - min_feature
+    - max_part
+    note: 40 µm optical resolution; 27.5 mm build
+  verify: []
+- id: lcm
+  name: Lithography ceramic (LCM)
+  aka: Ceramic vat photopolymerization + sinter
+  family: vpp
+  maturity: niche
+  materials:
+  - ceramic
+  capabilities:
+  - biocompatible
+  material_text: Alumina, zirconia, silicon nitride, tricalcium phosphate, hydroxyapatite
+  bands:
+    system_price: 100k-500k
+    min_feature: 50-200um
+    max_part: 300mm-1m
+  estimated:
+  - system_price
+  ratings:
+    surface: 4
+    strength: 4
+    throughput: 1
+    materials: 2
+    cost_per_part: 1
+    workflow: 1
+    freedom: 2
+  choose: Dense technical ceramics with fine features.
+  avoid: Thick sections (debind cracking), large parts, fast iteration.
+  applications: Turbine casting cores, bone implants, semiconductor and RF parts.
+  vendors_text: 3DCeram, Admatec, Lithoz, Prodways.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Vat Photopolymerization'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Lithoz CeraFab System S65
+    url: https://www.aniwaa.com/product/3d-printers/lithoz-cerafab-s65/
+    publisher: Aniwaa
+    supports:
+    - min_feature
+    - max_part
+    note: 40 µm lateral resolution; 320 mm longest axis
+  verify: []
+- id: lmm
+  name: Lithography metal (LMM)
+  aka: Metal-filled vat + debind/sinter
+  family: vpp
+  maturity: emerging
+  materials:
+  - metal
+  capabilities: []
+  material_text: 316L, 17-4PH, Ti-6Al-4V, tungsten, copper
+  bands:
+    system_price: 100k-500k
+    min_feature: 50-200um
+    max_part: 100-300mm
+  estimated:
+  - system_price
+  ratings:
+    surface: 4
+    strength: 4
+    throughput: 2
+    materials: 2
+    cost_per_part: 2
+    workflow: 1
+    freedom: 2
+  choose: Small, fine-featured metal parts in volume without laser melting; no residual stress.
+  avoid: Large or thick parts; 15–20% sinter shrink must be compensated.
+  applications: Surgical instruments, watch parts, small gears.
+  vendors_text: Admatec, Incus.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Vat Photopolymerization'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Incus Hammer Lab35 metal AM machine in production
+    url: https://www.metal-am.com/incus-hammer-lab35-metal-am-machine-in-production/
+    publisher: Metal AM
+    supports:
+    - min_feature
+    - max_part
+    note: 35 µm lateral resolution; 120 mm longest axis
+  verify: []
+- id: sls
+  name: Selective laser sintering
+  aka: SLS, polymer
+  family: pbf-polymer
+  maturity: mature
+  materials:
+  - polymer
+  - elastomer
+  - composite
+  capabilities:
+  - biocompatible
+  - flame_retardant
+  - support_free
+  material_text: PA12, PA11, glass- and carbon-filled PA, TPU, PP; PEEK/PEKK on high-temp systems
+  bands:
+    system_price: 10k-100k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  ratings:
+    surface: 2
+    strength: 4
+    throughput: 4
+    materials: 3
+    cost_per_part: 4
+    workflow: 3
+    freedom: 5
+  choose: Functional nylon with no supports; nested batches; snap fits, living hinges, ducts, enclosures; bridge production
+    from 10 to 10,000 units.
+  avoid: Glossy cosmetic surfaces without finishing; walls under ~0.8 mm; watertight parts without sealing; color beyond
+    dyeing.
+  applications: Drone and robot parts, ducting, jigs, orthotics, end-use housings.
+  vendors_text: 3D Systems, EOS, Farsoon, Formlabs, Prodways, Sinterit.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Powder Bed Fusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Minimum wall thickness for 3D printing
+    url: https://formlabs.com/blog/minimum-wall-thickness-3d-printing/
+    publisher: Formlabs
+    supports:
+    - min_feature
+    note: SLS minimum wall 0.3–0.6 mm
+  - title: 'Sinterit unveils Lisa X: technical specifications and pricing'
+    url: https://3dprintingindustry.com/news/sinterit-unveils-new-ten-times-faster-lisa-x-ahead-of-formnext-technical-specifications-and-pricing-199355/
+    publisher: 3D Printing Industry
+    supports:
+    - system_price
+    note: $23,990
+  - title: EOS P 770
+    url: https://www.eos.info/polymer-solutions/polymer-printers/eos-p-770
+    publisher: EOS
+    supports:
+    - max_part
+    note: 700 mm longest axis
+  verify: []
+- id: mjf
+  name: Multi Jet Fusion
+  aka: MJF
+  family: pbf-polymer
+  maturity: mature
+  materials:
+  - polymer
+  - elastomer
+  capabilities:
+  - biocompatible
+  - support_free
+  material_text: PA12, PA11, PA12 glass bead, PP, TPU; grey/black (white on 5420W); HR PA12 for MJF 1200
+  bands:
+    system_price: 100k-500k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  ratings:
+    surface: 3
+    strength: 4
+    throughput: 5
+    materials: 2
+    cost_per_part: 5
+    workflow: 3
+    freedom: 5
+  choose: Lowest cost per nylon part at volume; consistent near-isotropic properties; production in the thousands.
+  avoid: Bright colors without dye; very low volume where machine cost dominates; materials beyond nylon, PP, TPU.
+  applications: Production housings, brackets, orthotics, consumer goods, service bureaus.
+  vendors_text: HP (Jet Fusion 5200 and 5400 series).
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Powder Bed Fusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: HP MJF handbook
+    url: https://www.protolabs.com/media/sq1l5it2/hp_mjf_handbook.pdf
+    publisher: Protolabs
+    supports:
+    - min_feature
+    note: Sub-millimeter minimum walls and features
+  - title: HP Jet Fusion 5200
+    url: https://www.aniwaa.com/product/3d-printers/hp-jet-fusion-5200/
+    publisher: Aniwaa
+    supports:
+    - system_price
+    note: From about $250,000 (reported)
+  - title: HP Jet Fusion 5200 Series
+    url: https://hp.com/gb-en/printers/3d-printers/products/multi-jet-fusion-5200.html
+    publisher: HP
+    supports:
+    - max_part
+    note: 380 mm longest axis
+  - title: HP MJF PA12 biocompatibility certificate
+    url: https://mdmf.hkust.edu.hk/files/HP%20MJF%20-%20PA12%20-%20Biocompatibility%20Certificate.pdf
+    publisher: HP (hosted by HKUST)
+    supports:
+    - capabilities
+    note: PA12 meets USP Class I–VI and FDA intact-skin guidance
+  verify: []
+- id: hss
+  name: HSS / SAF
+  aka: High speed sintering, selective absorption fusion
+  family: pbf-polymer
+  maturity: industrial
+  materials:
+  - polymer
+  capabilities:
+  - support_free
+  material_text: PA11, PA12, TPU
+  bands:
+    system_price: 100k-500k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  ratings:
+    surface: 3
+    strength: 4
+    throughput: 5
+    materials: 2
+    cost_per_part: 5
+    workflow: 3
+    freedom: 5
+  choose: High-volume PA11/PA12 production with consistent quality; large build areas.
+  avoid: Prototype-only use; small budgets.
+  applications: Automotive interior parts, industrial components, contract manufacturing.
+  vendors_text: Stratasys (H350, SAF), voxeljet (VX1000 HSS).
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Powder Bed Fusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Stratasys H350
+    url: https://www.aniwaa.com/product/3d-printers/stratasys-h350/
+    publisher: Aniwaa
+    supports:
+    - system_price
+    note: Reported $150,000–310,000
+  - title: VX1000 HSS 3D printer
+    url: https://www.voxelmatters.com/vx1000-hss-3d-printer-speed-repeatability-flexibility/
+    publisher: VoxelMatters
+    supports:
+    - max_part
+    note: 1000 mm longest axis
+  - title: SAF technology design guide
+    url: https://prod-cms.stratasys.com/contentassets/de6e551874574e62900b8dcb7dbb7f94/dg_saf_designguide_0623a.pdf
+    publisher: Stratasys
+    supports:
+    - min_feature
+    note: 0.6 mm minimum for small features
+  verify: []
+- id: htsls
+  name: High-temperature SLS
+  aka: PEEK / PEKK powder bed
+  family: pbf-polymer
+  maturity: niche
+  materials:
+  - polymer
+  - composite
+  capabilities:
+  - flame_retardant
+  - high_temp_polymer
+  - support_free
+  material_text: PEKK, PEEK, carbon-filled PEKK
+  bands:
+    system_price: gt500k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  estimated:
+  - system_price
+  - min_feature
+  band_notes:
+    min_feature: No PEEK or PEKK design guide found; band follows general laser-sintering guidance.
+  ratings:
+    surface: 2
+    strength: 5
+    throughput: 2
+    materials: 2
+    cost_per_part: 1
+    workflow: 2
+    freedom: 5
+  choose: Flight-qualified polymer parts, FST compliance, sterilizable implants, chemical resistance above 150 °C.
+  avoid: Cost-sensitive work; low powder reuse makes parts expensive.
+  applications: Aircraft ducting and brackets, PEKK implants, oil and gas.
+  vendors_text: EOS (P 770 HT, P 810), Farsoon (high-temperature systems).
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Powder Bed Fusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: EOS targets aerospace with new P810 machine and carbon fibre-filled PEKK material
+    url: https://develop3d.com/develop3d-blog/eos-aerospace-carbon-fibre-filled-pekk-additive/
+    publisher: DEVELOP3D
+    supports:
+    - max_part
+    note: 700 mm longest axis
+  - title: Guidelines for wall thickness in laser sintering
+    url: https://www.additivemanufacturing.media/articles/guidelines-for-wall-thickness-in-laser-sintering
+    publisher: Additive Manufacturing
+    supports:
+    - min_feature
+    note: 0.8 mm (PA12) to 2.0 mm (carbon-filled PA)
+  verify: []
+- id: lpbf
+  name: Laser powder bed fusion (metal)
+  aka: DMLS, SLM, LPBF
+  family: pbf-metal
+  maturity: mature
+  materials:
+  - metal
+  capabilities:
+  - biocompatible
+  material_text: Ti-6Al-4V, Inconel 718/625, 316L, 17-4PH, AlSi10Mg, CoCr, copper alloys, tool steels
+  bands:
+    system_price: 100k-500k
+    min_feature: 0.2-1mm
+    max_part: 1-3m
+  band_notes:
+    system_price: Set by a compact industrial system. One small-envelope unit has been reported near $90K, but most
+      industrial LPBF systems cost well above this band.
+  ratings:
+    surface: 2
+    strength: 5
+    throughput: 2
+    materials: 4
+    cost_per_part: 1
+    workflow: 1
+    freedom: 2
+  choose: 'Dense, high-performance metal parts with internal channels: conformal cooling, heat exchangers, aerospace
+    brackets, implants.'
+  avoid: Simple parts that machine cheaply; large flat overhangs; teams without powder handling, HIP, and machining.
+  applications: Rocket engine parts, orthopedic implants, conformal-cooled molds, heat exchangers.
+  vendors_text: 3D Systems (DMP), BLT, Colibrium Additive, EOS, Eplus3D, Farsoon, Nikon SLM Solutions, Renishaw, Trumpf,
+    Velo3D, Xact Metal.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Powder Bed Fusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Xact Metal launches XM200G, drops price of XM200C
+    url: https://www.tctmagazine.com/xact-metal-launches-xm200g-metal-3d-printer-drops-price-of-x/
+    publisher: TCT Magazine
+    supports:
+    - system_price
+    note: XM200G $90,000 (reported)
+  - title: TRUMPF TruPrint 1000
+    url: https://www.aniwaa.com/product/3d-printers/trumpf-truprint-1000-lmf/
+    publisher: Aniwaa
+    supports:
+    - system_price
+    note: From $170,000 (reported)
+  - title: SLM Solutions announces NXG XII 600E
+    url: https://www.metal-am.com/slm-solutions-announces-nxg-xii-600e-metal-3d-printer/
+    publisher: Metal AM
+    supports:
+    - max_part
+    note: 1.5 m longest axis
+  - title: DMLS design tips
+    url: https://xometry.pro/en-eu/articles/dmls-design-tips/
+    publisher: Xometry
+    supports:
+    - min_feature
+    note: Minimum wall 0.8 mm
+  verify: []
+- id: ebm
+  name: Electron beam PBF
+  aka: EBM, PBF-EB
+  family: pbf-metal
+  maturity: industrial
+  materials:
+  - metal
+  capabilities:
+  - biocompatible
+  material_text: Ti-6Al-4V, TiAl, CoCr, tungsten, copper
+  bands:
+    system_price: 100k-500k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  estimated:
+  - system_price
+  ratings:
+    surface: 1
+    strength: 5
+    throughput: 2
+    materials: 2
+    cost_per_part: 1
+    workflow: 1
+    freedom: 3
+  choose: Crack-prone or reactive alloys (TiAl, W); hot-bed process with low residual stress; stacked orthopedic implants.
+  avoid: Fine features, smooth surfaces, non-conductive materials.
+  applications: Acetabular cups, TiAl turbine blades, tungsten collimators.
+  vendors_text: Colibrium Additive (Arcam), Freemelt, JEOL, Wayland Additive.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Powder Bed Fusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: EBM Spectra L brochure
+    url: https://www.colibriumadditive.com/sites/default/files/41222_EBM_Spectra%20L_Bro_4_US_EN_v1.pdf
+    publisher: Colibrium Additive
+    supports:
+    - max_part
+    note: Ø350 x 430 mm
+  - title: Does additive manufacturing still need design guidelines? Electron beam melting
+    url: https://3dprint.com/262881/additive-manufacturing-still-need-design-guidelines-electron-beam-melting/
+    publisher: 3DPrint.com
+    supports:
+    - min_feature
+    note: Minimum wall 0.6 mm
+  verify: []
+- id: fff
+  name: FFF / FDM, desktop
+  aka: Fused filament fabrication
+  family: mex
+  maturity: mature
+  materials:
+  - polymer
+  - elastomer
+  - composite
+  capabilities:
+  - multi_material
+  material_text: PLA, PETG, ABS/ASA, TPU, PA, PC, chopped-CF blends
+  bands:
+    system_price: lt1k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  ratings:
+    surface: 2
+    strength: 2
+    throughput: 2
+    materials: 5
+    cost_per_part: 5
+    workflow: 4
+    freedom: 1
+  choose: Cheapest, fastest iteration; fixtures, jigs, enclosures, visual models; multi-color on toolchangers.
+  avoid: Loads across layers (Z strength often 30–70% of XY); fine detail; airtight or smooth parts without post-work.
+  applications: Jigs and fixtures, prototypes, education, spare parts.
+  vendors_text: Anycubic, Bambu Lab, Creality, Elegoo, Prusa, Snapmaker.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Extrusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: FDM design guide
+    url: https://www.stratasys.com/siteassets/sdm/content---website-storage/design-guides/dg_sdm_fdm_0725a.pdf
+    publisher: Stratasys Direct
+    supports:
+    - min_feature
+    note: 0.4 mm minimum feature
+  - title: Bambu Lab A1 mini review
+    url: https://all3dp.com/1/bambu-lab-a1-mini-review/
+    publisher: All3DP
+    supports:
+    - system_price
+    note: $299
+  - title: 'Bambu Lab''s new H2D: technical specifications and pricing'
+    url: https://3dprintingindustry.com/news/bambu-labs-new-h2d-3d-printer-technical-specifications-and-pricing-237763/
+    publisher: 3D Printing Industry
+    supports:
+    - max_part
+    note: 350 mm longest axis
+  verify: []
+- id: ifdm
+  name: Industrial FDM
+  aka: Engineering-grade extrusion
+  family: mex
+  maturity: mature
+  materials:
+  - polymer
+  - composite
+  capabilities:
+  - biocompatible
+  - flame_retardant
+  - high_temp_polymer
+  material_text: ULTEM 9085/1010, PEEK, PEKK, PC, ASA, PA-CF, ESD grades
+  bands:
+    system_price: 10k-100k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  ratings:
+    surface: 2
+    strength: 3
+    throughput: 2
+    materials: 4
+    cost_per_part: 3
+    workflow: 4
+    freedom: 2
+  choose: Certified flame-retardant and high-temp thermoplastics; traceable aerospace and rail interiors; large tooling
+    with soluble supports.
+  avoid: Fine detail, isotropic loading, smooth finish.
+  applications: Aircraft interior parts, layup tools, end-of-arm tooling.
+  vendors_text: 3ntr, Intamsys, Raise3D, Roboze, Stratasys (F-series, F900, F3300), UltiMaker (Factor, Method).
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Extrusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: 'UltiMaker launches Method XL: technical specifications and pricing'
+    url: https://3dprintingindustry.com/news/ultimaker-launches-new-method-xl-for-affordable-industrial-scale-3d-printing-technical-specifications-and-pricing-222258/
+    publisher: 3D Printing Industry
+    supports:
+    - system_price
+    note: $13,999; heated chamber to 100 °C
+  - title: FDM design guide
+    url: https://www.stratasys.com/siteassets/sdm/content---website-storage/design-guides/dg_sdm_fdm_0725a.pdf
+    publisher: Stratasys Direct
+    supports:
+    - min_feature
+  - title: F900 brochure
+    url: https://www.stratasys.com/contentassets/c5f389582c404778aa4d662884e66e46/br_fdm_f900_0924a.pdf
+    publisher: Stratasys
+    supports:
+    - max_part
+    note: 914 mm longest axis
+  - title: FDM materials biocompatibility
+    url: https://www.stratasys.com/en/resources/blog/fdm-materials-biocompatability/
+    publisher: Stratasys
+    supports:
+    - capabilities
+    note: ABS-M30i, PC-ISO, ULTEM 1010 tested to ISO 10993
+  verify: []
+- id: cf
+  name: Continuous fiber composite
+  aka: CFF
+  family: mex
+  maturity: industrial
+  materials:
+  - composite
+  capabilities: []
+  material_text: Nylon or PEEK matrix with continuous carbon, glass, or aramid fiber
+  bands:
+    system_price: 10k-100k
+    min_feature: gt1mm
+    max_part: 300mm-1m
+  band_notes:
+    min_feature: Fiber reinforcement needs walls of about 2.9 mm; unreinforced regions print at FFF scale.
+  ratings:
+    surface: 2
+    strength: 5
+    throughput: 1
+    materials: 2
+    cost_per_part: 2
+    workflow: 3
+    freedom: 1
+  choose: Aluminum-replacement fixtures and brackets where in-plane stiffness matters.
+  avoid: Out-of-plane loads; complex 3D fiber paths (most systems lay fiber in-plane); fine features.
+  applications: Factory fixtures, robot grippers, drone arms.
+  vendors_text: 9T Labs, Anisoprint, Continuous Composites, Markforged.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Extrusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Markforged Mark Two
+    url: https://www.aniwaa.com/product/3d-printers/markforged-mark-two/
+    publisher: Aniwaa
+    supports:
+    - system_price
+    note: From about $20,000
+  - title: 'Q&A: Markforged FX20 composite 3D printing system'
+    url: https://www.tctmagazine.com/q-a-markforged-fx20-composite-3d-printing-system/
+    publisher: TCT Magazine
+    supports:
+    - max_part
+    note: 525 mm longest axis
+  - title: 'Threading the needle with ease: minimum fiber feature sizes'
+    url: https://markforged.com/blog/threading-the-needle-with-ease
+    publisher: Markforged
+    supports:
+    - min_feature
+    note: Fiber-reinforced walls about 2.9 mm
+  verify: []
+- id: pellet
+  name: Pellet / large-format extrusion
+  aka: LFAM, BAAM
+  family: mex
+  maturity: industrial
+  materials:
+  - polymer
+  - composite
+  capabilities: []
+  material_text: Fiber-filled ABS, PC, PEI, PP, recycled thermoplastics
+  bands:
+    system_price: 100k-500k
+    min_feature: gt1mm
+    max_part: gt3m
+  estimated:
+  - system_price
+  ratings:
+    surface: 1
+    strength: 3
+    throughput: 4
+    materials: 3
+    cost_per_part: 5
+    workflow: 2
+    freedom: 1
+  choose: Meter-scale molds, tooling, hulls, furniture from cheap pellet feedstock.
+  avoid: Detail; parts used as-printed without machining.
+  applications: Composite layup molds, autoclave tooling, marine, architecture.
+  vendors_text: 3D Systems (EXT Titan), Caracol, CEAD, Cincinnati (BAAM), Thermwood, Weber.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Extrusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: CEAD BEAD
+    url: https://www.aniwaa.com/product/3d-printers/cead-bead/
+    publisher: Aniwaa
+    supports:
+    - max_part
+    note: Up to 50 m long
+  - title: How do I choose the right nozzle size for large format 3D printing?
+    url: https://knowledge.ceadgroup.com/how-do-i-choose-the-right-nozzle-size-for-large-format-3d-printing
+    publisher: CEAD
+    supports:
+    - min_feature
+    note: Smallest standard nozzle (2 mm) lays a 2.7 mm bead
+  verify: []
+- id: bmfff
+  name: Bound metal extrusion
+  aka: Metal FFF + debind/sinter
+  family: mex
+  maturity: industrial
+  materials:
+  - metal
+  capabilities: []
+  material_text: 17-4PH, 316L, H13, copper, Inconel (polymer-bound filament or rods)
+  bands:
+    system_price: 1k-10k
+    min_feature: 0.2-1mm
+    max_part: 100-300mm
+  estimated:
+  - system_price
+  - min_feature
+  - max_part
+  band_notes:
+    system_price: 'Varies with the sintering route: a desktop printer with outsourced debind and sinter is cheapest;
+      in-house debind and sinter equipment costs far more.'
+    max_part: Limited by the sintering furnace and by shrinkage during sintering, so it varies by furnace.
+  ratings:
+    surface: 2
+    strength: 3
+    throughput: 1
+    materials: 3
+    cost_per_part: 3
+    workflow: 2
+    freedom: 1
+  choose: Low-volume metal brackets and tooling in a shop; the filament route lets existing FFF printers make metal with
+    outsourced debind/sinter.
+  avoid: Thick sections; tight tolerances after 17–20% shrink; volume production.
+  applications: Tooling, spare parts, fixtures.
+  vendors_text: Forward AM (Ultrafuse metal filaments with sinter service), Markforged (Metal X). Entry price assumes
+    a desktop FFF printer plus outsourced sintering.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Extrusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Ultrafuse metal user guideline
+    url: https://move.forward-am.com/hubfs/AES%20Documentation/Metal%20Filaments/Ultrafuse_metal_User_Guideline.pdf
+    publisher: Forward AM (BASF)
+    supports:
+    - process
+  verify: []
+- id: diw
+  name: Direct ink writing
+  aka: Paste / robocasting
+  family: mex
+  maturity: research
+  materials:
+  - ceramic
+  - elastomer
+  - other
+  capabilities:
+  - multi_material
+  material_text: Silicones, ceramic pastes, silver and conductive inks, hydrogels, energetics, food
+  bands:
+    system_price: 10k-100k
+    min_feature: 10-50um
+    max_part: 100-300mm
+  estimated:
+  - system_price
+  band_notes:
+    min_feature: Set by a precision dispensing system's 20 µm lines. Typical lab setups print coarser lines.
+  ratings:
+    surface: 2
+    strength: 2
+    throughput: 1
+    materials: 5
+    cost_per_part: 2
+    workflow: 2
+    freedom: 2
+  choose: 'Custom formulations you develop yourself: functional inks, printed electronics, soft robotics, silicones.'
+  avoid: Rigid production parts; tight tolerances.
+  applications: Printed electronics, silicone devices, ceramic scaffolds, battery electrodes.
+  vendors_text: Hyrel, nScrypt, ViscoTec (dispensing heads), Voltera.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Direct Write Technologies'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: nRugged datasheet
+    url: https://www.ncst.com/wp-content/uploads/2022/10/nRugged-ed.pdf
+    publisher: nScrypt
+    supports:
+    - min_feature
+    - max_part
+    note: Line widths to 20 µm; 152 mm travel
+  verify: []
+- id: bio
+  name: Bioprinting
+  aka: Extrusion, light-based, droplet
+  family: mex
+  maturity: research
+  materials:
+  - bio
+  capabilities:
+  - biocompatible
+  - multi_material
+  material_text: Cell-laden hydrogels (GelMA, alginate, collagen, dECM), sacrificial inks
+  bands:
+    system_price: 10k-100k
+    min_feature: 0.2-1mm
+    max_part: 100-300mm
+  estimated:
+  - system_price
+  - min_feature
+  band_notes:
+    min_feature: Set by needle gauge and bioink flow; common needles are 0.2–0.5 mm inside diameter.
+  ratings:
+    surface: 1
+    strength: 1
+    throughput: 1
+    materials: 3
+    cost_per_part: 1
+    workflow: 2
+    freedom: 2
+  choose: Tissue models, organoid scaffolds, drug-screening constructs, cell-patterning research.
+  avoid: Anything outside R&D; implantable use remains early.
+  applications: 3D tissue models, skin and cartilage constructs, organ-on-chip.
+  vendors_text: 3D Systems (Systemic Bio), Aspect Biosystems, BICO (CELLINK), Readily3D.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Extrusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: CELLINK BIO X
+    url: https://www.aniwaa.com/product/3d-printers/cellink-bio-x/
+    publisher: Aniwaa
+    supports:
+    - max_part
+    note: 128 mm longest axis
+  - title: A mathematical model on the resolution of extrusion bioprinting for the development of new bioinks
+    url: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5457067/
+    publisher: Materials (via PMC)
+    supports:
+    - min_feature
+    note: Strand width depends on nozzle, pressure, and speed
+  verify: []
+- id: conc
+  name: Construction extrusion
+  aka: Concrete / earth printing
+  family: mex
+  maturity: emerging
+  materials:
+  - other
+  capabilities: []
+  material_text: Cementitious mortars, geopolymers, earth and clay
+  bands:
+    system_price: gt500k
+    min_feature: gt1mm
+    max_part: gt3m
+  ratings:
+    surface: 1
+    strength: 3
+    throughput: 4
+    materials: 1
+    cost_per_part: 4
+    workflow: 2
+    freedom: 1
+  choose: Walls and structures with curved geometry and reduced formwork.
+  avoid: Code-limited jurisdictions; reinforced structural members without hybrid methods.
+  applications: Housing, barracks, infrastructure elements.
+  vendors_text: Apis Cor, COBOD, ICON, Mighty Buildings.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Extrusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: COBOD BOD2
+    url: https://www.aniwaa.com/product/3d-printers/cobod-bod2/
+    publisher: Aniwaa
+    supports:
+    - system_price
+    note: Reported $750,000 to $2 million by configuration
+  - title: BOD2 specifications
+    url: https://cobod.com/solution/bod2/specifications/
+    publisher: COBOD
+    supports:
+    - max_part
+    - min_feature
+    note: Printable area up to 14.6 x 49.4 x 8.5 m; layers up to 75 mm high
+  verify: []
+- id: polyjet
+  name: PolyJet / MultiJet
+  aka: Photopolymer jetting
+  family: mjt
+  maturity: mature
+  materials:
+  - polymer
+  - elastomer
+  capabilities:
+  - biocompatible
+  - full_color
+  - multi_material
+  - transparent
+  material_text: Rigid and flexible photopolymers blended Shore A to D, full color, transparent; gel or soluble supports
+  bands:
+    system_price: 10k-100k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  ratings:
+    surface: 5
+    strength: 2
+    throughput: 3
+    materials: 4
+    cost_per_part: 1
+    workflow: 4
+    freedom: 4
+  choose: Multi-material and full-color appearance prototypes; soft-touch overmolds in one part; anatomical and surgical
+    models.
+  avoid: Functional loads, UV or heat exposure, cost-sensitive volume.
+  applications: Industrial design models, surgical planning models, dental (J5 DentaJet), packaging mockups.
+  vendors_text: 3D Systems (ProJet MJP), Keyence (Agilista), Mimaki, Stratasys (J-series, J55).
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Jetting'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: 'Design guidelines: PolyJet'
+    url: https://www.protolabs.com/services/3d-printing/polyjet/design-guidelines/
+    publisher: Protolabs
+    supports:
+    - min_feature
+    note: 0.3 mm minimum feature
+  - title: 'Stratasys launches the J55: technical specifications and pricing'
+    url: https://3dprintingindustry.com/news/stratasys-launches-the-j55-color-3d-printer-technical-specifications-and-pricing-171209/
+    publisher: 3D Printing Industry
+    supports:
+    - system_price
+    note: About $99,000 (reported)
+  - title: J850 Pro
+    url: https://www.stratasys.com/en/3d-printers/printer-catalog/polyjet/j850-pro/
+    publisher: Stratasys
+    supports:
+    - max_part
+    note: 490 mm longest axis
+  verify: []
+- id: vcj
+  name: Vision-controlled jetting
+  aka: VCJ
+  family: mjt
+  maturity: emerging
+  materials:
+  - polymer
+  - elastomer
+  capabilities:
+  - multi_material
+  material_text: Jetted thiol-ene and epoxy chemistries, elastomers, wax supports
+  bands:
+    system_price: 100k-500k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  estimated:
+  - system_price
+  ratings:
+    surface: 4
+    strength: 3
+    throughput: 4
+    materials: 3
+    cost_per_part: 3
+    workflow: 3
+    freedom: 4
+  choose: Multi-material functional parts using slower-curing, tougher chemistries than PolyJet; soft-rigid assemblies.
+  avoid: Low budgets; broad material catalogs.
+  applications: Robot grippers, medical devices, soft-rigid assemblies.
+  vendors_text: Inkbit.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Jetting'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Inkbit Vista
+    url: https://inkbit3d.com/vista
+    publisher: Inkbit
+    supports:
+    - max_part
+    note: 500 mm longest axis
+  - title: Single-material design guide
+    url: https://inkbit3d.com/single-material-design-guide
+    publisher: Inkbit
+    supports:
+    - min_feature
+    note: Minimum wall 0.5 mm; 1 mm recommended
+  verify: []
+- id: apf
+  name: Plastic freeforming
+  aka: APF, droplets from molding pellets
+  family: mjt
+  maturity: niche
+  materials:
+  - polymer
+  - elastomer
+  capabilities:
+  - biocompatible
+  material_text: 'Standard injection-molding pellets: ABS, PC, PA, TPE, medical PLLA'
+  bands:
+    system_price: 100k-500k
+    min_feature: 0.2-1mm
+    max_part: 100-300mm
+  estimated:
+  - system_price
+  ratings:
+    surface: 2
+    strength: 3
+    throughput: 1
+    materials: 4
+    cost_per_part: 2
+    workflow: 3
+    freedom: 2
+  choose: Printing the actual molding-grade or medical-grade material, e.g. resorbable PLLA implants.
+  avoid: Speed; large parts.
+  applications: Resorbable implants, functional prototypes in production material.
+  vendors_text: Arburg (Freeformer).
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Jetting'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Arburg Freeformer 300-3X expands build chamber
+    url: https://additivemanufacturing.media/products/arburg-freeformer-300-3x-3d-printer-expands-build-chamber
+    publisher: Additive Manufacturing
+    supports:
+    - max_part
+    note: 234 mm longest axis
+  - title: ARBURG Plastic Freeforming
+    url: https://www.roechling.com/group/additive-manufacturing/technologies/arburg-plastic-freeforming
+    publisher: Röchling (service provider)
+    supports:
+    - min_feature
+    note: Minimum wall 0.6–1.0 mm
+  verify: []
+- id: wax
+  name: Wax jetting
+  aka: Lost-wax patterns
+  family: mjt
+  maturity: niche
+  materials:
+  - casting
+  capabilities: []
+  material_text: Casting waxes
+  bands:
+    system_price: 10k-100k
+    min_feature: 50-200um
+    max_part: 100-300mm
+  estimated:
+  - min_feature
+  band_notes:
+    min_feature: Vendors publish layer thickness (about 25 µm), not feature size.
+  ratings:
+    surface: 5
+    strength: 1
+    throughput: 1
+    materials: 1
+    cost_per_part: 2
+    workflow: 4
+    freedom: 4
+  choose: Highest-fidelity investment-casting patterns with clean burnout.
+  avoid: Anything not being cast.
+  applications: Fine jewelry, cast dental work, micro-castings.
+  vendors_text: 3D Systems (ProJet MJP 2500W), Solidscape.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Jetting'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Solidscape S500
+    url: https://www.aniwaa.com/product/3d-printers/solidscape-s500/
+    publisher: Aniwaa
+    supports:
+    - system_price
+    note: Reported $30,000–100,000
+  - title: S500 product sheet
+    url: https://static.treatstock.com/static/fxd/wikiMaterials/castable-wax/files/s500-product-sheet_7-17-17.pdf
+    publisher: Solidscape
+    supports:
+    - max_part
+    note: 152 mm longest axis
+  verify: []
+- id: npj
+  name: NanoParticle jetting
+  aka: NPJ
+  family: mjt
+  maturity: niche
+  materials:
+  - metal
+  - ceramic
+  capabilities: []
+  material_text: Stainless steel, zirconia, alumina
+  bands:
+    system_price: gt500k
+    min_feature: 50-200um
+    max_part: 300mm-1m
+  ratings:
+    surface: 4
+    strength: 4
+    throughput: 1
+    materials: 2
+    cost_per_part: 1
+    workflow: 2
+    freedom: 4
+  choose: Small, intricate ceramic or metal parts with fine features and soluble supports.
+  avoid: Cost-sensitive or large parts.
+  applications: Medical and dental ceramics, electronics components.
+  vendors_text: XJet.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Jetting'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: 'AM 101: NanoParticle Jetting (NPJ)'
+    url: https://additivemanufacturing.media/blog/post/am-101-nanoparticle-jetting-npj
+    publisher: Additive Manufacturing
+    supports:
+    - min_feature
+    note: 100 µm minimum feature
+  - title: XJet Carmel 1400C
+    url: https://www.aniwaa.com/product/3d-printers/xjet-carmel-1400c/
+    publisher: Aniwaa
+    supports:
+    - system_price
+    - max_part
+    note: From $649,000 (reported); 500 mm longest axis
+  verify: []
+- id: lmj
+  name: Liquid metal jetting
+  aka: Magnetohydrodynamic droplets
+  family: mjt
+  maturity: emerging
+  materials:
+  - metal
+  capabilities: []
+  material_text: Aluminum alloys (4008, 6061), copper
+  bands:
+    system_price: gt500k
+    min_feature: 0.2-1mm
+    max_part: 100-300mm
+  estimated:
+  - system_price
+  - min_feature
+  band_notes:
+    min_feature: Set by droplet size, which depends on the nozzle orifice.
+  ratings:
+    surface: 2
+    strength: 4
+    throughput: 2
+    materials: 1
+    cost_per_part: 3
+    workflow: 3
+    freedom: 2
+  choose: Aluminum parts from cheap wire feedstock with no powder handling.
+  avoid: Fine features; alloys beyond aluminum; fatigue-certified parts.
+  applications: Spare parts, naval and defense aluminum components.
+  vendors_text: ADDiTEC (ElemX), Grob.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Material Jetting'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: ElemX 3D printer brochure
+    url: https://xerox.com/downloads/usa/en/3d-printing/ElemX-3D-Printer-Brochure.pdf
+    publisher: Xerox
+    supports:
+    - max_part
+    note: 300 mm longest axis
+  verify: []
+- id: mbj
+  name: Metal binder jetting
+  aka: BJT-M
+  family: bjt
+  maturity: industrial
+  materials:
+  - metal
+  capabilities:
+  - support_free
+  material_text: 316L, 17-4PH, 304L, copper, tool steels, tungsten carbide
+  bands:
+    system_price: 100k-500k
+    min_feature: gt1mm
+    max_part: 300mm-1m
+  estimated:
+  - system_price
+  ratings:
+    surface: 3
+    strength: 4
+    throughput: 4
+    materials: 3
+    cost_per_part: 4
+    workflow: 1
+    freedom: 4
+  choose: Volume production (thousands to hundreds of thousands) of small metal parts; MIM replacement without tooling.
+  avoid: Large or thick parts; tight tolerances without sizing; low volume.
+  applications: Automotive brackets, consumer hardware, tooling inserts, medical instruments.
+  vendors_text: Arc Impact, HP (Metal Jet), Nano Dimension.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Binder Jetting'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: How to design parts for binder jetting
+    url: https://hubs.com/knowledge-base/how-design-parts-binder-jetting-3d-printing
+    publisher: Hubs
+    supports:
+    - min_feature
+    note: 1–2 mm minimum features
+  - title: HP Metal Jet S100
+    url: https://www.hp.com/us-en/printers/3d-printers/products/metal-jet.html
+    publisher: HP
+    supports:
+    - max_part
+    note: 430 mm longest axis
+  verify: []
+- id: sbj
+  name: Sand binder jetting
+  aka: Molds and cores
+  family: bjt
+  maturity: mature
+  materials:
+  - casting
+  capabilities:
+  - support_free
+  material_text: Silica or ceramic sand with furan or phenolic binder
+  bands:
+    system_price: gt500k
+    min_feature: gt1mm
+    max_part: gt3m
+  estimated:
+  - system_price
+  band_notes:
+    system_price: The lowest-priced sand system is quote only; the band uses the S-Max list price.
+  ratings:
+    surface: 1
+    strength: 2
+    throughput: 5
+    materials: 1
+    cost_per_part: 5
+    workflow: 4
+    freedom: 5
+  choose: Casting molds and cores with no pattern; cores impossible with core boxes; prototype castings in days.
+  avoid: Anything needed as a final part (the print is the mold).
+  applications: Engine blocks, pump housings, foundry prototypes.
+  vendors_text: ExOne, voxeljet.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Binder Jetting'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: ExOne S-Max
+    url: https://www.aniwaa.com/product/3d-printers/exone-s-max/
+    publisher: Aniwaa
+    supports:
+    - system_price
+    note: From $1.4 million (reported)
+  - title: TEI expands partnership with voxeljet by purchasing VX4000
+    url: https://3dprintingindustry.com/news/tei-expands-its-partnership-with-voxeljet-by-purchasing-vx4000-3d-printer-220973/
+    publisher: 3D Printing Industry
+    supports:
+    - max_part
+    note: 4 m longest axis
+  - title: How to design parts for binder jetting
+    url: https://hubs.com/knowledge-base/how-design-parts-binder-jetting-3d-printing
+    publisher: Hubs
+    supports:
+    - min_feature
+    note: Minimum wall 2 mm
+  verify: []
+- id: cbj
+  name: Full-color binder jetting
+  aka: ColorJet, gypsum
+  family: bjt
+  maturity: mature
+  materials:
+  - other
+  capabilities:
+  - full_color
+  - support_free
+  material_text: Gypsum composite, PMMA
+  bands:
+    system_price: 10k-100k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  band_notes:
+    min_feature: Details to 0.5 mm, but walls need about 3 mm to survive handling.
+  ratings:
+    surface: 2
+    strength: 1
+    throughput: 3
+    materials: 1
+    cost_per_part: 3
+    workflow: 3
+    freedom: 5
+  choose: Cheap full-color visual models.
+  avoid: Functional parts; fragile without infiltration.
+  applications: Architecture models, terrain, color prototypes.
+  vendors_text: 3D Systems (ProJet CJP).
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Binder Jetting'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: 3D Systems ProJet 660Pro
+    url: https://www.aniwaa.com/product/3d-printers/3d-systems-projet-660pro/
+    publisher: Aniwaa
+    supports:
+    - system_price
+    note: About $59,650 (reported)
+  - title: ProJet x60 series brochure
+    url: https://www.3dsystems.com/sites/default/files/projet-x60-series-us_0.pdf
+    publisher: 3D Systems
+    supports:
+    - max_part
+    note: 381 mm longest axis
+  - title: Full-color material details
+    url: https://dbe.unibas.ch/en/services/core-facility-3d-print-lab/home/materials/fullcolor-material/
+    publisher: University of Basel 3D Print Lab
+    supports:
+    - min_feature
+    note: 0.5 mm smallest detail; 3 mm minimum wall
+  verify: []
+- id: ded
+  name: Laser DED
+  aka: LMD, LENS, laser-wire
+  family: ded
+  maturity: industrial
+  materials:
+  - metal
+  capabilities:
+  - multi_material
+  material_text: Ti, Inconel, steels, functionally graded alloys
+  bands:
+    system_price: 100k-500k
+    min_feature: 0.2-1mm
+    max_part: 300mm-1m
+  estimated:
+  - max_part
+  band_notes:
+    min_feature: Laser DED. Arc-based deposition is far coarser (see WAAM).
+    max_part: Robot and gantry cells can build larger; the band uses the largest catalog machine.
+  ratings:
+    surface: 1
+    strength: 4
+    throughput: 3
+    materials: 3
+    cost_per_part: 3
+    workflow: 1
+    freedom: 1
+  choose: Repair and cladding of high-value parts; adding features to existing parts; graded materials; hybrid with CNC.
+  avoid: Complex overhangs and internal channels; finished surfaces without machining.
+  applications: Turbine blade repair, mold repair, wear coatings, near-net shapes.
+  vendors_text: AddUp, DMG Mori, Formalloy, Meltio, Optomec, Trumpf.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Directed Energy Deposition'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Meltio M450 wire-laser metal 3D printer
+    url: https://matterhackers.com/store/l/meltio-m450-wire-laser-metal-3d-printer
+    publisher: MatterHackers (reseller)
+    supports:
+    - system_price
+    note: About $154,000
+  - title: Meltio M600 datasheet
+    url: https://meltio3d.com/wp-content/uploads/2024/10/Meltio_M600_Datasheet.pdf
+    publisher: Meltio
+    supports:
+    - max_part
+    note: 600 mm longest axis
+  - title: Design rules for directed energy deposition (ASTM ICAM 2022)
+    url: https://ntrs.nasa.gov/citations/20220016393
+    publisher: NASA (Gradl, Ely)
+    supports:
+    - min_feature
+    note: 1 mm walls routine for laser powder and laser wire DED; 0.8 mm demonstrated
+  verify: []
+- id: waam
+  name: Wire-arc AM / EBAM
+  aka: WAAM, electron beam wire
+  family: ded
+  maturity: industrial
+  materials:
+  - metal
+  capabilities: []
+  material_text: Steel, Ti, Al, Ni alloys from welding wire
+  bands:
+    system_price: 100k-500k
+    min_feature: gt1mm
+    max_part: gt3m
+  estimated:
+  - system_price
+  ratings:
+    surface: 1
+    strength: 4
+    throughput: 4
+    materials: 3
+    cost_per_part: 4
+    workflow: 1
+    freedom: 1
+  choose: Meter-scale metal near-net shapes at kg/h deposition; replacing long-lead forgings and castings.
+  avoid: Detail; parts without a machining plan.
+  applications: Ship propellers, Ti aerospace preforms, large fittings.
+  vendors_text: Gefertec, Lincoln Electric, MX3D, Sciaky (EBAM), WAAM3D.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Directed Energy Deposition'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Industrial metal 3D printers
+    url: https://www.sciaky.com/additive-manufacturing/industrial-metal-3d-printers
+    publisher: Sciaky
+    supports:
+    - max_part
+    note: EBAM 300 at 5.8 m longest axis
+  - title: How do you design parts for wire arc additive manufacturing?
+    url: https://mx3d.com/how-do-you-design-parts-for-wire-arc-additive-manufacturing-waam/
+    publisher: MX3D
+    supports:
+    - min_feature
+    note: Bead width 2–10 mm; walls above about 5 mm
+  verify: []
+- id: cold
+  name: Cold spray AM
+  aka: Supersonic solid-state deposition
+  family: ded
+  maturity: industrial
+  materials:
+  - metal
+  capabilities: []
+  material_text: Copper, aluminum, Ti, stainless
+  bands:
+    system_price: gt500k
+    min_feature: gt1mm
+    max_part: 300mm-1m
+  estimated:
+  - system_price
+  band_notes:
+    min_feature: Minimum deposition spot about 6 mm; fine features are machined after printing.
+  ratings:
+    surface: 1
+    strength: 4
+    throughput: 5
+    materials: 2
+    cost_per_part: 3
+    workflow: 1
+    freedom: 1
+  choose: Fast metal deposition without melting (low oxidation and stress); field-deployable spare parts; repair.
+  avoid: Fine geometry; overhangs.
+  applications: Expeditionary defense parts, copper heat sinks, repair.
+  vendors_text: Impact Innovations, SPEE3D, Titomic.
+  refs:
+  - title: LightSPEE3D specifications
+    url: https://www.spee3d.com/wp-content/uploads/2024/04/LIGHTSPEE3D-Specifications-Sheet-05-1.pdf
+    publisher: SPEE3D
+    supports:
+    - max_part
+    - min_feature
+    note: Ø350 x 300 mm; 6 mm minimum deposition spot
+  verify: []
+- id: uam
+  name: Ultrasonic AM
+  aka: UAM, ultrasonic consolidation
+  family: shl
+  maturity: niche
+  materials:
+  - metal
+  capabilities:
+  - multi_material
+  material_text: Al, Cu, Ti foils; dissimilar-metal laminates with embedded sensors or fibers
+  bands:
+    system_price: gt500k
+    min_feature: 0.2-1mm
+    max_part: 1-3m
+  estimated:
+  - system_price
+  - min_feature
+  band_notes:
+    min_feature: Final features are CNC-milled in the same machine. The distinguishing ability is embedding sensors and
+      joining dissimilar metals at low temperature.
+  ratings:
+    surface: 2
+    strength: 4
+    throughput: 2
+    materials: 3
+    cost_per_part: 3
+    workflow: 2
+    freedom: 1
+  choose: Embedding sensors, fibers, or electronics in metal at low temperature; dissimilar-metal joining.
+  avoid: Complex 3D geometry without CNC; small budgets.
+  applications: Embedded sensor housings, heat exchangers, armor.
+  vendors_text: Fabrisonic.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Sheet Lamination'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: SonicLayer 7200
+    url: https://fabrisonic.com/wp-content/uploads/2024/04/SonicLayer-7200-R4.pdf
+    publisher: Fabrisonic
+    supports:
+    - max_part
+    note: 1829 mm longest axis
+  - title: 'AM 101: What is ultrasonic additive manufacturing?'
+    url: https://additivemanufacturing.media/articles/am-101-ultrasonic-additive-manufacturing
+    publisher: Additive Manufacturing
+    supports:
+    - process
+  verify: []
+- id: cbam
+  name: Composite-based AM
+  aka: CBAM, sheet lamination
+  family: shl
+  maturity: emerging
+  materials:
+  - composite
+  capabilities:
+  - high_temp_polymer
+  material_text: Carbon or glass fiber sheets with PEEK or PA12 matrix
+  bands:
+    system_price: 100k-500k
+    min_feature: gt1mm
+    max_part: 300mm-1m
+  estimated:
+  - system_price
+  ratings:
+    surface: 2
+    strength: 4
+    throughput: 4
+    materials: 2
+    cost_per_part: 4
+    workflow: 3
+    freedom: 4
+  choose: Strong, high-temp composite parts in volume.
+  avoid: Large single parts; through-thickness loading.
+  applications: Drone frames, brackets, sporting goods.
+  vendors_text: Impossible Objects.
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Sheet Lamination'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: Impossible Objects CBAM-25
+    url: https://www.aniwaa.com/product/3d-printers/impossible-objects-cbam5/
+    publisher: Aniwaa
+    supports:
+    - min_feature
+    - max_part
+    note: 2 mm minimum wall; 457 mm longest axis
+  verify: []
+- id: ecam
+  name: Electrochemical AM
+  aka: ECAM, localized electrodeposition
+  family: other
+  maturity: emerging
+  materials:
+  - metal
+  capabilities: []
+  material_text: Pure copper, nickel
+  bands:
+    system_price: service
+    min_feature: 10-50um
+    max_part: 100-300mm
+  band_notes:
+    system_price: Offered as a parts service; no systems are sold.
+  ratings:
+    surface: 4
+    strength: 4
+    throughput: 2
+    materials: 1
+    cost_per_part: 2
+    workflow: 4
+    freedom: 3
+  choose: Fine-featured pure-copper thermal parts at room temperature, no powder.
+  avoid: Large parts; metals that do not electroplate.
+  applications: Data-center cold plates, electronics thermal management, RF parts.
+  vendors_text: Fabric8Labs (production service; no system sales, so excluded from price views).
+  refs:
+  - title: 'Micro metal 3D printing: the new investment magnet'
+    url: https://3dprint.com/298908/micro-metal-3d-printing-the-new-investment-magnet-2/
+    publisher: 3DPrint.com
+    supports:
+    - min_feature
+    - max_part
+    note: 50 µm resolution; parts up to 100–150 mm
+  verify: []
+- id: cmf
+  name: Cold Metal Fusion
+  aka: Polymer-bound metal on SLS + sinter
+  family: other
+  maturity: emerging
+  materials:
+  - metal
+  capabilities:
+  - support_free
+  material_text: Polymer-bound Ti-6Al-4V, 316L, 17-4PH
+  bands:
+    system_price: 100k-500k
+    min_feature: gt1mm
+    max_part: 300mm-1m
+  estimated:
+  - system_price
+  - max_part
+  band_notes:
+    system_price: Runs on third-party SLS machines plus debind and sinter equipment, so cost varies with the platform.
+    max_part: Limited by the sintering furnace and by shrinkage during sintering.
+  ratings:
+    surface: 2
+    strength: 4
+    throughput: 3
+    materials: 3
+    cost_per_part: 4
+    workflow: 1
+    freedom: 4
+  choose: 'Metal parts at polymer-SLS economics: no supports, nested builds, green parts machinable before sinter.'
+  avoid: Large or thick parts; tolerance-critical parts without shrink compensation.
+  applications: Small-series titanium and steel parts, medical, consumer.
+  vendors_text: Headmade Materials (feedstock for open SLS platforms).
+  refs:
+  - title: Additive Manufacturing Technologies, 3rd ed., chapter 'Powder Bed Fusion'
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    publisher: Springer (Gibson, Rosen, Stucker, Khorasani)
+    supports:
+    - process
+    year: 2021
+  - title: 'Cold Metal Fusion: what is it'
+    url: https://3dprinting.com/metal/cold-metal-fusion-what-is-it
+    publisher: 3DPrinting.com
+    supports:
+    - min_feature
+    - process
+    note: 1–2 mm minimum wall
+  verify: []

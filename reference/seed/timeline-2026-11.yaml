@@ -1,0 +1,113 @@
+# Seed events from the private atlas draft's 2024-2026 timeline (Nov 2026), queued for review, never auto-accepted.
+# Dates and wording were re-checked against the cited sources on 2026-11-11; "note" records where the draft differed.
+# Items that are not one of the six event types (a revenue quarter, a board change, a market-share figure) were dropped.
+# classify/seed.py queues each item once (qid seed:<id>).
+
+events:
+- id: "01"
+  company: formlabs
+  date: "2024-04-17"
+  type: launch
+  title: Formlabs launches Form 4 and Form 4B masked-SLA printers ($4,499 and $6,299)
+  url: https://formlabs.com/company/press/formlabs-launches-form-4-its-fastest-most-versatile-3d-printer/
+  processes: [msla]
+- id: "02"
+  company: formlabs
+  date: "2024-07-11"
+  type: acquisition
+  title: Formlabs acquires Micronics, developer of a low-cost SLS printer
+  url: https://techcrunch.com/2024/07/11/formlabs-acquires-3d-printing-startup-micronics-mid-kickstarter-campaign
+  processes: [sls]
+- id: "03"
+  company: sintratec
+  date: "2024-05-07"
+  type: wind_down
+  title: Sintratec ceases operations after bankruptcy
+  url: https://www.voxelmatters.com/swiss-sls-solutions-manufacturer-sintratec-shuts-down/
+  note: Draft said "exits SLS, mid 2024"; sources report bankruptcy and closure as of 7 May 2024.
+- id: "04"
+  company: sinterit
+  date: "2025-03"
+  type: launch
+  title: Sinterit launches Suzy benchtop SLS printer (EUR 17,590, about $19,300)
+  url: https://3dprintingindustry.com/news/new-sinterit-suzy-sls-3d-printer-technical-specifications-and-pricing-238106/
+  processes: [sls]
+  note: Draft said about $19.5K; the cited article gives EUR 17,590 (US$19,310). Sales opened April 2025.
+- id: "05"
+  company: nano-dimension
+  date: "2025-04-02"
+  type: acquisition
+  title: Nano Dimension completes acquisition of Desktop Metal
+  url: https://3dprint.com/317233/desktop-metal-now-officially-part-of-nano-dimension/
+  processes: [mbj, bmfff, dlp]
+- id: "06"
+  company: nano-dimension
+  date: "2025-04-25"
+  type: acquisition
+  title: Nano Dimension completes acquisition of Markforged
+  url: https://www.fabbaloo.com/news/markforged-deal-completes-without-controversy-as-nano-dimension-advances-digital-manufacturing-vision
+  processes: [cf, bmfff]
+- id: "07"
+  company: nexa3d
+  date: "2024-11"
+  type: wind_down
+  title: Nexa3D says it can no longer guarantee support or material supply and ceases operations
+  url: https://3dprint.com/319226/stratasys-buys-nexa3d-assets-as-market-shifts-from-startups-to-giants/
+  note: Draft dated this 2025; the source puts the notice in November 2024 and the shutdown at the end of 2024.
+- id: "08"
+  company: stratasys
+  date: "2025-07"
+  type: acquisition
+  title: Stratasys acquires Nexa3D assets (IP, inventory and equipment)
+  url: https://3dprintingindustry.com/news/stratasys-acquires-nexa3d-assets-in-new-agreement-241524/
+  processes: [msla, sls]
+- id: "09"
+  company: desktop-metal
+  date: "2025-07-28"
+  type: wind_down
+  title: Desktop Metal files for Chapter 11; binder-jet and other assets sold to Arc Impact and an Anzu Partners affiliate
+  url: https://www.3dnatives.com/en/desktop-metal-files-for-chapter-11-bankruptcy-3007202501/
+  sources: [https://3dprintingindustry.com/news/desktop-metal-assets-acquired-by-arc-impact-to-focus-on-advanced-manufacturing-244464/]
+- id: "10"
+  company: 3d-systems
+  date: "2025-04-01"
+  type: exit
+  title: 3D Systems completes sale of its Geomagic software business to Hexagon ($119.4M)
+  url: https://www.sec.gov/Archives/edgar/data/910638/000162828026015997/ddd-20251231.htm
+  note: Draft combined this with the 3DXpert and Oqton sale (item 11) as "over $120M raised".
+- id: "11"
+  company: 3d-systems
+  date: "2025-10-31"
+  type: exit
+  title: 3D Systems completes sale of its 3DXpert and Oqton software businesses to Hubb Global Holdings
+  url: https://www.sec.gov/Archives/edgar/data/910638/000162828026015997/ddd-20251231.htm
+- id: "12"
+  company: stratasys
+  date: "2026-05"
+  type: acquisition
+  status: announced
+  title: Stratasys agrees to buy Markforged from Nano Dimension for $42.5M; close expected second half of 2026
+  url: https://3dprintingindustry.com/news/nano-dimension-takes-substantial-loss-on-sale-of-markforged-to-stratasys-251862/
+  processes: [cf, bmfff]
+- id: "13"
+  company: formlabs
+  date: "2026-06-09"
+  type: launch
+  title: Formlabs launches Fuse X1 large-format SLS printer ($84,999)
+  url: https://formlabs.com/company/press/formlabs-unveils-fuse-x1-large-format-sls-3d-printing/
+  processes: [sls]
+- id: "14"
+  company: hp
+  date: "2026"
+  type: launch
+  status: announced
+  title: HP announces the MJF 1200 at under $60K, shipping in 2027
+  url: https://3dprint.com/325348/hps-mjf-1200-targets-entry-level-am-and-could-shift-the-competitive-landscape/
+  processes: [mjf]
+- id: "15"
+  company: formlabs
+  date: "2026-10"
+  type: launch
+  title: Formlabs launches Form Studio 1 masked-SLA printer ($699)
+  url: https://www.engineering.com/formlabs-introduces-form-studio-1-resin-3d-printer/
+  processes: [msla]

@@ -1,0 +1,40 @@
+# Checked statements. analysis/claims.py re-checks each one on every build.
+#
+#   id        unique
+#   page      where it appears: home or landscape
+#   text      what the page says. {name} fills in a value (uv run python -m analysis.claims --values). **bold** not supported.
+#   holds     the condition the text depends on, as a Python expression over the same values
+#   fallback  neutral wording with current numbers, no interpretation; shown if holds is false
+#
+# Rules: technology-level statements only. A vendor is never judged. A rewrite changes text and holds together.
+claims:
+- id: desktop
+  page: landscape
+  text: "{n_desktop} of the {n} processes have an entry system under $10,000."
+  holds: "n_desktop >= 1"
+  fallback: "{n_desktop} of the {n} processes have an entry system under $10,000."
+- id: top_end
+  page: landscape
+  text: "{n_over_500k} start above $500,000, and one is sold only as a parts service."
+  holds: "n_service == 1 and n_over_500k >= 1"
+  fallback: "{n_over_500k} start above $500,000; {n_service} are sold only as a parts service."
+- id: fine_small
+  page: landscape
+  text: "All {n_fine} processes that resolve features under 50 µm are limited to parts under 300 mm."
+  holds: "n_fine >= 2 and fine_all_small"
+  fallback: "{n_fine} processes resolve features under 50 µm."
+- id: estimates
+  page: landscape
+  text: "{n_price_estimated} entry prices are estimates, because the vendors quote on request or the cost depends on the setup; process pages say which."
+  holds: "n_price_estimated >= 1"
+  fallback: "{n_price_estimated} entry prices are estimates."
+- id: vendors
+  page: landscape
+  text: "Of the {n_vendors} vendors listed, {n_vendors_priced} have a published or reported price for at least one system."
+  holds: "n_vendors_priced < n_vendors"
+  fallback: "{n_vendors} vendors are listed; {n_vendors_priced} have a published or reported price."
+- id: scope
+  page: home
+  text: "{n} processes across {n_families} families, {n_refs} references, {n_vendors} vendors."
+  holds: "True"
+  fallback: "{n} processes, {n_refs} references."

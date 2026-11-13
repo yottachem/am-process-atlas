@@ -1,0 +1,358 @@
+# Events-feed watch registry. Seeded 2026-11-11: the vendors in vendors.yaml with regular news flow, plus companies
+# that left the market but appear in events (desktop-metal, nexa3d, sintratec).
+# A key that is a vendors.yaml id takes its name and processes from there; any other key needs name and processes.
+# ownership: public | private | subsidiary (own brand, owned by a parent) | defunct (operations ended)
+# domain / other_domains: the company's own sites; links on them count as tier-1 sources (source_tiers.yaml).
+# cik: SEC registrant for filings (ingest.filings). Only companies whose filings describe the AM business: HP is
+#   left out (its filings cover the whole parent).
+# news.terms: exact phrases (any match); news.context: words one of which must also appear (ambiguous names);
+#   news.exclude: phrases that rule a headline out (other companies with the same name).
+# newsroom_feed: the company's own RSS/Atom feed, checked 2026-11-11; null = none found.
+# Listing here is not endorsement; the registry decides what is watched, not what is shown.
+
+companies:
+  3d-systems:
+    ownership: public
+    domain: 3dsystems.com
+    other_domains: []
+    cik: 910638
+    news: {terms: ['"3D Systems"']}
+    newsroom_feed: null
+  stratasys:
+    ownership: public
+    domain: stratasys.com
+    other_domains: []
+    cik: 1517396
+    news: {terms: ['"Stratasys"']}
+    newsroom_feed: https://investors.stratasys.com/rss/news-releases.xml
+  hp:
+    ownership: public
+    domain: hp.com
+    other_domains: []
+    cik: null
+    news:
+      terms: ['"HP"']
+      context: ["3D printing", "3D printer", "3D printers", "additive manufacturing", "Multi Jet Fusion", "Jet Fusion"]
+    newsroom_feed: null
+  eos:
+    ownership: private
+    domain: eos.info
+    other_domains: []
+    cik: null
+    news:
+      terms: ['"EOS"']
+      context: ["3D printing", "3D printer", "additive manufacturing", "additive"]
+      exclude: ["EOS token", "EOS network", "EOSIO", "Canon EOS", "EOS Energy"]
+    newsroom_feed: null
+  formlabs:
+    ownership: private
+    domain: formlabs.com
+    other_domains: []
+    cik: 1535399
+    news: {terms: ['"Formlabs"']}
+    newsroom_feed: null
+  carbon:
+    ownership: private
+    domain: carbon3d.com
+    other_domains: []
+    cik: 1648978
+    news:
+      terms: ['"Carbon"']
+      context: ["3D printing", "3D printer", "additive manufacturing", "DLS", "lattice"]
+      exclude: ["carbon capture", "carbon removal", "carbon credit", "carbon credits", "carbon fiber", "carbon emissions",
+                "carbon neutral", "carbon footprint", "low-carbon", "carbon dioxide"]
+    newsroom_feed: null
+  markforged:
+    ownership: subsidiary
+    domain: markforged.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Markforged"']}
+    newsroom_feed: null
+  nano-dimension:
+    ownership: public
+    domain: nano-di.com
+    other_domains: []
+    cik: 1643303
+    news: {terms: ['"Nano Dimension"']}
+    newsroom_feed: null
+  velo3d:
+    ownership: public
+    domain: velo3d.com
+    other_domains: []
+    cik: 1825079
+    news: {terms: ['"Velo3D"']}
+    newsroom_feed: null
+  nikon-slm-solutions:
+    ownership: subsidiary
+    domain: nikon-slm-solutions.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Nikon SLM"', '"SLM Solutions"']}
+    newsroom_feed: null
+  colibrium-additive:
+    ownership: subsidiary
+    domain: colibriumadditive.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Colibrium Additive"', '"GE Additive"']}
+    newsroom_feed: null
+  renishaw:
+    ownership: public
+    domain: renishaw.com
+    other_domains: []
+    cik: null
+    news:
+      terms: ['"Renishaw"']
+      context: ["3D printing", "additive manufacturing", "additive", "metal AM", "RenAM"]
+    newsroom_feed: null
+  trumpf:
+    ownership: private
+    domain: trumpf.com
+    other_domains: []
+    cik: null
+    news:
+      terms: ['"Trumpf"', '"TRUMPF"']
+      context: ["3D printing", "additive manufacturing", "additive", "metal AM", "TruPrint"]
+    newsroom_feed: null
+  farsoon:
+    ownership: public
+    domain: farsoon-gl.com
+    other_domains: [farsoon.com]
+    cik: null
+    news: {terms: ['"Farsoon"']}
+    newsroom_feed: null
+  eplus3d:
+    ownership: private
+    domain: eplus3d.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Eplus3D"']}
+    newsroom_feed: null
+  blt:
+    ownership: public
+    domain: xa-blt.com
+    other_domains: []
+    cik: null
+    news:
+      terms: ['"Bright Laser Technologies"', '"BLT"']
+      context: ["3D printing", "additive manufacturing", "additive", "metal AM"]
+      exclude: ["BLT sandwich"]
+    newsroom_feed: null
+  prodways:
+    ownership: public
+    domain: prodways.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Prodways"']}
+    newsroom_feed: null
+  voxeljet:
+    ownership: subsidiary
+    domain: voxeljet.com
+    other_domains: [exone.com]
+    cik: null
+    news: {terms: ['"voxeljet"', '"ExOne"']}
+    newsroom_feed: https://www.voxeljet.com/feed/
+  arc-impact:
+    ownership: private
+    domain: null
+    other_domains: []
+    cik: null
+    news:
+      terms: ['"Arc Impact"']
+      context: ["3D printing", "additive manufacturing", "binder jet", "Desktop Metal"]
+    newsroom_feed: null
+  sprintray:
+    ownership: private
+    domain: sprintray.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"SprintRay"']}
+    newsroom_feed: null
+  asiga:
+    ownership: private
+    domain: asiga.com
+    other_domains: []
+    cik: null
+    news:
+      terms: ['"Asiga"']
+      context: ["3D printing", "3D printer", "dental", "DLP", "resin"]
+    newsroom_feed: null
+  elegoo:
+    ownership: private
+    domain: elegoo.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Elegoo"', '"ELEGOO"']}
+    newsroom_feed: null
+  anycubic:
+    ownership: private
+    domain: anycubic.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Anycubic"']}
+    newsroom_feed: null
+  phrozen:
+    ownership: private
+    domain: phrozen3d.com
+    other_domains: []
+    cik: null
+    news:
+      terms: ['"Phrozen"']
+      context: ["3D printing", "3D printer", "resin", "LCD"]
+    newsroom_feed: null
+  heygears:
+    ownership: private
+    domain: heygears.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"HeyGears"']}
+    newsroom_feed: null
+  bambu-lab:
+    ownership: private
+    domain: bambulab.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Bambu Lab"']}
+    newsroom_feed: null
+  prusa:
+    ownership: private
+    domain: prusa3d.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Prusa Research"', '"Prusa"'], context: ["3D printing", "3D printer", "3D printers"]}
+    newsroom_feed: null
+  creality:
+    ownership: private
+    domain: creality.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Creality"']}
+    newsroom_feed: null
+  ultimaker:
+    ownership: private
+    domain: ultimaker.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"UltiMaker"', '"Ultimaker"']}
+    newsroom_feed: null
+  raise3d:
+    ownership: private
+    domain: raise3d.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Raise3D"']}
+    newsroom_feed: null
+  sinterit:
+    ownership: private
+    domain: sinterit.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Sinterit"']}
+    newsroom_feed: null
+  lithoz:
+    ownership: private
+    domain: lithoz.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Lithoz"']}
+    newsroom_feed: https://www.lithoz.com/en/feed/
+  nanoscribe:
+    ownership: subsidiary
+    domain: nanoscribe.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Nanoscribe"']}
+    newsroom_feed: null
+  boston-micro-fabrication:
+    ownership: private
+    domain: bmf3d.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Boston Micro Fabrication"']}
+    newsroom_feed: null
+  inkbit:
+    ownership: private
+    domain: inkbit3d.com
+    other_domains: []
+    cik: 1866959
+    news: {terms: ['"Inkbit"']}
+    newsroom_feed: null
+  xjet:
+    ownership: private
+    domain: xjet3d.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"XJet"']}
+    newsroom_feed: null
+  fabric8labs:
+    ownership: private
+    domain: fabric8labs.com
+    other_domains: []
+    cik: 1743062
+    news: {terms: ['"Fabric8Labs"']}
+    newsroom_feed: null
+  meltio:
+    ownership: private
+    domain: meltio3d.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Meltio"']}
+    newsroom_feed: null
+  spee3d:
+    ownership: private
+    domain: spee3d.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"SPEE3D"']}
+    newsroom_feed: null
+  icon:
+    ownership: private
+    domain: iconbuild.com
+    other_domains: []
+    cik: 1751463
+    news:
+      terms: ['"ICON"']
+      context: ["3D-printed homes", "3D printed homes", "3D-printed houses", "3D printing", "construction printing", "Vulcan"]
+    newsroom_feed: null
+  cobod:
+    ownership: private
+    domain: cobod.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"COBOD"']}
+    newsroom_feed: null
+  xact-metal:
+    ownership: private
+    domain: xactmetal.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Xact Metal"']}
+    newsroom_feed: null
+  desktop-metal:
+    name: Desktop Metal
+    processes: [mbj, bmfff, dlp]
+    ownership: defunct
+    domain: desktopmetal.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Desktop Metal"']}
+    newsroom_feed: null
+  nexa3d:
+    name: Nexa3D
+    processes: [msla, sls]
+    ownership: defunct
+    domain: nexa3d.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Nexa3D"']}
+    newsroom_feed: null
+  sintratec:
+    name: Sintratec
+    processes: [sls]
+    ownership: private
+    domain: sintratec.com
+    other_domains: []
+    cik: null
+    news: {terms: ['"Sintratec"']}
+    newsroom_feed: null

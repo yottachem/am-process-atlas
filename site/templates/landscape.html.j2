@@ -1,0 +1,35 @@
+{% extends "base.html.j2" %}
+{% block title %}Landscape{% endblock %}
+{% block description %}Who makes systems for each additive manufacturing process, and what an entry system costs where a price is public.{% endblock %}
+{% block body %}
+<div style="display:grid;gap:26px">
+<header class="head"><h1>Landscape</h1>
+<p class="lede">Who makes systems for each process, and what an entry system costs where a price is public. Vendors are alphabetical and not exhaustive; listing is not endorsement.</p></header>
+
+<section class="prose"><ul class="claims">{% for c in claims.get("landscape", []) %}<li{% if preview and not c.holds %} class="under-review"{% endif %}>{{ c.text }}{% if preview and not c.holds %} <span class="sub">(under review)</span>{% endif %}</li>{% endfor %}</ul></section>
+
+<div class="ctl" style="max-width:420px"><label for="l-q">Search</label><input type="search" id="l-q" placeholder="Process, vendor, or product"></div>
+
+{% for f in family_list %}{% set fps = rows|selectattr("family", "equalto", f.id)|list %}{% if fps %}
+<section class="lfam" style="display:grid;gap:10px"><h2>{{ f.name }}</h2>
+<div class="tframe"><table class="ltbl"><colgroup><col style="width:19%"><col style="width:15%"><col style="width:38%"><col style="width:28%"></colgroup><thead><tr><th>Process</th><th>Entry system</th><th>Vendors</th><th>Public prices</th></tr></thead><tbody>
+{% for r in fps %}<tr data-s="{{ r.search }}"><td style="font-weight:600;white-space:nowrap"><a href="{{ r.id }}.html">{{ r.name }}</a></td>
+<td class="band" style="white-space:nowrap">{{ r.band }}{% if r.estimated %} <span class="sub">(estimate)</span>{% endif %}</td>
+<td>{{ r.vendors_text }}</td>
+<td>{% for pr in r.prices %}<div><a href="{{ pr.source }}" rel="noopener">{{ pr.vendor }} {{ pr.product }}</a>: {{ pr.value }}{% if pr.basis == "reported" %} <span class="sub">(reported)</span>{% endif %}{% if pr.status %} <span class="sub">({{ pr.status|lower }})</span>{% endif %}</div>{% else %}<span class="sub">{{ r.price_note or "Quote on request" }}</span>{% endfor %}</td></tr>
+{% endfor %}</tbody></table></div></section>
+{% endif %}{% endfor %}
+
+<p class="sub">Prices as of {{ reviewed }}, in US dollars, for the system only. "Reported" means trade press or a reseller, not the manufacturer. Download: <a href="vendors.csv">vendors.csv</a>, <a href="atlas.json">atlas.json</a>.</p>
+</div>
+<script>
+(() => {
+  const q = document.getElementById("l-q");
+  q.addEventListener("input", () => {
+    const t = q.value.trim().toLowerCase();
+    document.querySelectorAll("tr[data-s]").forEach(tr => { tr.hidden = t && !tr.dataset.s.includes(t); });
+    document.querySelectorAll(".lfam").forEach(s => { s.hidden = !s.querySelector("tr[data-s]:not([hidden])"); });
+  });
+})();
+</script>
+{% endblock %}

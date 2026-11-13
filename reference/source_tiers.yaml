@@ -1,0 +1,27 @@
+# Source tiers decide what is auto-accepted into reference/ledger.csv (rules: classify/accept.py, methods page).
+# tier1: primary sources (company domains from companies.yaml, wires, SEC) plus a short major-outlet allowlist.
+#   Clean parses from tier 1 can be auto-accepted.
+# tier2: AM trade press and reputable general press. Always the review queue.
+# secondary: aggregators, market-data sites, blogs. Review queue; accepted only with a better source alongside.
+# A domain matches itself and its subdomains. Every source domain in the ledger must appear here or be a company
+# domain (tests/test_events.py), so a new domain surfaces for a tier decision instead of defaulting silently.
+# Set up 2026-11-11 from the physical-ai-tracker tiers, with AM trade press added to tier 2.
+
+tier1:
+  wires: [businesswire.com, globenewswire.com, prnewswire.com, accesswire.com, einpresswire.com, actusnews.com]
+  filings: [sec.gov]
+  outlets: [reuters.com, bloomberg.com, wsj.com, ft.com, nytimes.com, apnews.com, cnbc.com, axios.com, techcrunch.com]
+
+tier2: [3dprint.com, 3dprintingindustry.com, voxelmatters.com, tctmagazine.com, all3dp.com, fabbaloo.com, develop3d.com,
+        engineering.com, additivemanufacturing.media, metal-am.com, 3dnatives.com, digitalengineering247.com,
+        manufactur3dmag.com, compositesworld.com, mmsonline.com, designnews.com, thomasnet.com, plasticstoday.com,
+        dentistrytoday.com, dentaltown.com, drbicuspid.com, medicaldevice-network.com, mddionline.com,
+        bizjournals.com, businessinsider.com, forbes.com, fortune.com, theverge.com, wired.com, arstechnica.com,
+        tomshardware.com, theregister.com, finance.yahoo.com, marketwatch.com, barrons.com, nasdaq.com,
+        geekwire.com, bostonglobe.com, sifted.eu, tech.eu, scmp.com, contextworld.com, spectrum.ieee.org,
+        3dprinting.com, cbsaustin.com]
+
+secondary: [3dprintingmedia.network, aniwaa.com, 3dsourced.com, cults3d.com, benzinga.com, seekingalpha.com, fool.com,
+            investing.com, marketscreener.com, stocktitan.net, tipranks.com, zacks.com, msn.com, yahoo.com,
+            simplywall.st, tracxn.com, crunchbase.com, pitchbook.com, owler.com, medium.com, reddit.com,
+            youtube.com, linkedin.com, ideal-investisseur.fr]

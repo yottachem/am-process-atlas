@@ -1,0 +1,12 @@
+# Process families, after ISO/ASTM 52900 (the seven categories), with powder bed fusion split into
+# polymer and metal because buyers shop them separately, plus "other" for hybrid and electrochemical routes.
+families:
+  - {id: vpp, code: VPP, name: Vat photopolymerization}
+  - {id: pbf-polymer, code: PBF-P, name: "Powder bed fusion, polymer"}
+  - {id: pbf-metal, code: PBF-M, name: "Powder bed fusion, metal"}
+  - {id: mex, code: MEX, name: Material extrusion}
+  - {id: mjt, code: MJT, name: Material jetting}
+  - {id: bjt, code: BJT, name: Binder jetting}
+  - {id: ded, code: DED, name: Directed energy deposition}
+  - {id: shl, code: SHL, name: Sheet lamination}
+  - {id: other, code: OTHER, name: Other and hybrid}

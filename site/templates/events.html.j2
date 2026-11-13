@@ -1,0 +1,36 @@
+{% extends "base.html.j2" %}
+{% block title %}Industry events{% endblock %}
+{% block description %}Additive manufacturing industry events with sources: system and material launches, acquisitions, mergers, funding, wind-downs, and market exits, filterable by process and company.{% endblock %}
+{% block head %}<link rel="alternate" type="application/rss+xml" title="AM Process Atlas events" href="events.xml">{% endblock %}
+{% block body %}
+<div style="display:grid;gap:22px">
+<header class="head"><h1>Industry events</h1>
+<p class="lede">Launches, acquisitions, mergers, funding, wind-downs, and market exits across {{ n_watched }} watched companies, each with its source. New items are found daily; most are reviewed by hand before they appear. <a href="methods.html#events">How events are found and accepted</a>.</p></header>
+
+<div class="panel row-filters" id="e-ctl">
+  <div class="ctl wide"><span class="lbl" id="e-t-l">Event type</span><div class="seg" id="e-t" role="group" aria-labelledby="e-t-l">{% for t, l in type_labels.items() %}<button type="button" class="chip" data-v="{{ t }}" aria-pressed="true">{{ l }}</button>{% endfor %}</div></div>
+  <div class="ctl"><label for="e-p">Process</label><select id="e-p"><option value="">All processes</option>{% for p in event_processes %}<option value="{{ p.id }}">{{ p.name }}</option>{% endfor %}</select></div>
+  <div class="ctl"><label for="e-c">Company</label><select id="e-c"><option value="">All companies</option>{% for c in event_companies %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select></div>
+</div>
+<p class="sub" id="e-n" aria-live="polite">{{ events|length }} event{{ "" if events|length == 1 else "s" }}</p>
+
+{% if events %}
+{% for year, evs in events|groupby("year")|reverse %}
+<section class="evy" style="display:grid;gap:6px"><h2>{{ year }}</h2>
+<ol class="evl">
+{% for e in evs|sort(attribute="date", reverse=true) %}<li data-t="{{ e.type }}" data-p="{{ e.processes|join(' ') }}" data-c="{{ e.company }}">
+  <span class="dt">{{ e.date_label }}</span>
+  <div class="evb"><div class="ev">{{ e.detail }}</div>
+  <div class="evm"><span class="etype">{{ type_labels[e.type] }}</span>{% if e.status != "closed" %} <span class="sub">{{ e.status }}</span>{% endif %} · {{ e.company_name }}{% if e.process_names %} · {{ e.process_names|join(", ") }}{% endif %} · {% for s in e.sources %}<a href="{{ s.url }}" rel="noopener">{{ s.domain }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</div></div>
+</li>
+{% endfor %}</ol></section>
+{% endfor %}
+<p class="sub" id="e-none" hidden>No events match these filters.</p>
+{% else %}
+<p class="sub">No events have been accepted yet.{% if preview %} Preview: {{ n_open }} item{{ "" if n_open == 1 else "s" }} waiting in the review queue.{% endif %}</p>
+{% endif %}
+
+<p class="sub">Dates are when the event happened or was announced; a month or year alone means the source gives no exact day. "Announced" means agreed or unveiled but not yet closed or shipping. Listing is not endorsement. Download: <a href="events.csv">events.csv</a>. Feed: <a href="events.xml">RSS</a>.</p>
+</div>
+<script src="events.js"></script>
+{% endblock %}

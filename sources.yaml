@@ -1,0 +1,15 @@
+# Source registry. Each process lists its own refs in reference/processes.yaml; this file records
+# the data sources the build and the events feed draw on, with license notes.
+sources:
+  iso_astm_52900:
+    name: ISO/ASTM 52900 Additive manufacturing, general principles, fundamentals and vocabulary
+    url: https://www.iso.org/standard/74514.html
+    license: Cited, not reproduced
+  gibson_amt_3e:
+    name: Gibson, Rosen, Stucker, Khorasani. Additive Manufacturing Technologies, 3rd ed. (Springer, 2021)
+    url: https://link.springer.com/book/10.1007/978-3-030-56127-7
+    license: Cited by chapter, not reproduced
+  vendor_and_press:
+    name: Vendor spec sheets and design guides, service-bureau design guides, trade press and reseller price reports
+    url: reference/processes.yaml and reference/vendors.yaml (per-item URLs)
+    license: Figures cited with links; no text reproduced

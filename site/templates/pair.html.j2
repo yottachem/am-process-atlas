@@ -1,0 +1,27 @@
+{% extends "base.html.j2" %}
+{% from "_side.html.j2" import side with context %}
+{% block title %}{{ pair.title }}: when to use each{% endblock %}
+{% block description %}{{ pair.intro|truncate(155, True, "…") }}{% endblock %}
+{% block body %}
+<div style="display:grid;gap:26px">
+<header class="head">
+  <div class="crumbs"><a href="index.html">Atlas</a> / <a href="compare.html">Compare</a></div>
+  <h1>{{ pair.title }}</h1>
+  <p class="lede">{{ pair.intro }}</p>
+</header>
+
+<section style="display:grid;gap:10px"><h2>Where they differ</h2>
+<ul class="diffs">{% for d in diffs %}<li>{{ d }}</li>{% else %}<li>Ratings and bands are the same; the differences are in mechanism, materials, and vendors below.</li>{% endfor %}</ul>
+<p class="sub">Ratings are 1–5 against all additive processes, per the <a href="methods.html#rubric">rubric</a>. A difference of 1 is within editorial judgment and is not listed.</p></section>
+
+<section style="display:grid;gap:10px"><h2>Side by side</h2>
+{{ side(ps) }}
+<p class="sub"><a href="compare.html?p={{ ps|map(attribute="id")|join(",") }}">Add another process to this comparison</a></p></section>
+
+<section style="display:grid;gap:10px"><h2>References</h2>
+<p class="sub">Each process page lists its sources: {% for p in ps %}<a href="{{ p.id }}.html#refs">{{ p.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}.</p></section>
+
+{% if related %}<section style="display:grid;gap:10px"><h2>Other comparisons</h2>
+<p>{% for r in related %}<a href="{{ r.id }}.html">{{ r.title }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p></section>{% endif %}
+</div>
+{% endblock %}

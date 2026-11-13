@@ -1,0 +1,60 @@
+{% extends "base.html.j2" %}
+{% block title %}{{ p.name }}: when to use it{% endblock %}
+{% block description %}{{ p.name }} ({{ p.aka }}): when to choose it, when to avoid it, materials, applications, vendors, and how it rates against other additive processes.{% endblock %}
+{% block body %}
+<div style="display:grid;gap:22px">
+<header class="head">
+  <div class="crumbs"><a href="index.html">Atlas</a> / {{ families[p.family].name }}</div>
+  <h1>{{ p.name }}</h1>
+  <p class="lede">{{ p.aka }}</p>
+  <div class="tags"><span class="fam">{{ families[p.family].code }}</span><span class="mat {{ p.group }}">{{ maturity_labels[p.maturity] }}</span>{% for c in p.capabilities %}<span class="fam">{{ capabilities[c] }}</span>{% endfor %}</div>
+</header>
+
+<div class="kv">
+  {% for axis in ["system_price", "min_feature", "max_part"] %}<div><div class="k">{{ bands[axis].label }}</div><div class="v">{{ band_label(axis, p.bands[axis]) }}{% if axis in p.get("estimated", []) %} <span class="sub">(estimate)</span>{% endif %}</div>{% if p.band_notes and p.band_notes[axis] %}<div class="bn">{{ p.band_notes[axis] }}</div>{% endif %}</div>{% endfor %}
+</div>
+
+<div class="dl">
+  <div><div class="k">Choose it when</div><p>{{ p.choose }}</p></div>
+  <div><div class="k">Avoid it when</div><p>{{ p.avoid }}</p></div>
+</div>
+
+<div class="panel" style="display:grid;gap:12px">
+  <h2>How it rates</h2>
+  <div class="rbars">
+  {% for k, d in rubric.items() %}<div class="rb"><span>{{ d.label }}</span><div class="bar"><i style="width:{{ p.ratings[k] * 20 }}%"></i></div><span class="n">{{ p.ratings[k] }}</span><small>{{ d.levels[p.ratings[k]] }}</small></div>
+  {% endfor %}</div>
+</div>
+
+{% if note %}
+<section style="display:grid;gap:10px"><h2>Practitioner note</h2>
+<div class="pnote">{% for para in note.body.split("\n\n") %}<p>{{ para }}</p>{% endfor %}<div class="by">{{ note.author }} · {{ note.date }}</div></div></section>
+{% elif preview and p.id in note_targets %}
+<section style="display:grid;gap:10px"><h2>Practitioner note</h2><div class="pending">Pending: Josh writes this note from a brief.</div></section>
+{% endif %}
+
+<div class="dl">
+  <div><div class="k">Materials</div><p>{{ p.material_text }}</p></div>
+  <div><div class="k">Typical applications</div><p>{{ p.applications }}</p></div>
+  <div><div class="k">Vendors (alphabetical, not exhaustive)</div><p>{{ p.vendors_text }}</p></div>
+</div>
+
+{% if grades %}
+<section style="display:grid;gap:10px"><h2>Material grades in the explorer</h2>
+<p>{% for m in grades|sort(attribute="grade") %}<a href="materials.html?p={{ p.id }}#g-{{ m.id }}">{{ m.grade }}</a> <span class="sub">({{ m.vendor }})</span>{% if not loop.last %} · {% endif %}{% endfor %}</p>
+<p class="sub">Data sheet tensile, modulus, elongation, and heat deflection values: <a href="materials.html?p={{ p.id }}">plot these grades</a>.</p></section>
+{% endif %}
+
+<section style="display:grid;gap:10px"><h2>Closest alternatives</h2>
+<div class="results">{% for a in alternatives %}<a class="res" href="{{ a.id }}.html" style="grid-template-columns:minmax(0,1fr)"><span><span class="nm">{{ a.name }}</span><div class="why">{{ a.diff }}</div></span></a>{% endfor %}</div></section>
+
+<section style="display:grid;gap:10px"><h2>Compare</h2>
+<p>{% for r in pairs %}<a href="{{ r.id }}.html">{{ r.title }}</a> · {% endfor %}<a href="compare.html?p={{ p.id }},{{ alternatives[0].id }}">Compare with {{ alternatives[0].name }} or any other process</a></p></section>
+
+<section style="display:grid;gap:10px" id="refs"><h2>References</h2>
+{% if p.refs %}<ol class="refs">{% for r in p.refs %}<li><a href="{{ r.url }}" rel="noopener">{{ r.title }}</a>{% if r.publisher %}, {{ r.publisher }}{% endif %}{% if r.year %} ({{ r.year }}){% endif %}{% if r.note %}. <span class="sub">{{ r.note }}</span>{% endif %}</li>{% endfor %}</ol>
+{% elif preview %}<div class="pending">Pending: references are added in the sourcing pass.</div>{% endif %}
+{% if preview and p.verify %}<div class="pending">Open review flags (preview only):<ul>{% for v in p.verify %}<li>{{ v }}</li>{% endfor %}</ul></div>{% endif %}
+</section>
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+name: update
+# Daily: SEC filings -> news -> acceptance rules -> (Mondays) link check -> statements -> test -> build -> commit data
+# -> deploy. A push to main runs the build and deploy steps only.
+# Commits data/news/articles.csv, data/review/queue.csv, data/runs.json and auto-accepted ledger rows, so the event
+# history accumulates in git. Raw snapshots stay in the runner (gitignored).
+# Scheduled runs need repo variable SCHEDULE_ON=true, deploys need PAGES_LIVE=true.
+# Secret: CONTACT_EMAIL (SEC User-Agent; never written to the repo).
+on:
+  schedule:
+    - cron: "0 12 * * *"   # daily 07:00 ET (EST)
+  workflow_dispatch:
+    inputs:
+      news_days:
+        description: "News lookback in days"
+        default: "3"
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name != 'schedule' || vars.SCHEDULE_ON == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+      FEED: ${{ github.event_name != 'push' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: SEC filings
+        if: env.FEED == 'true'
+        run: uv run python -m ingest.filings --since "$(date -u -d '14 days ago' +%F)"
+      - name: News
+        if: env.FEED == 'true'
+        run: uv run python -m ingest.news --sources bing,gnews,gdelt,newsroom --days "${{ inputs.news_days || '3' }}"
+      - name: Acceptance rules
+        if: env.FEED == 'true'
+        run: uv run python -m classify.accept
+      - name: Check links (Mondays, or when run by hand)
+        if: env.FEED == 'true'
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%u)" = "1" ]; then
+            uv run python -m tools.linkcheck
+          else
+            echo "Not Monday; skipping link check"
+          fi
+      - name: Check statements
+        run: uv run python -m analysis.claims
+      - name: Test
+        run: LAUNCH_GATE=1 uv run pytest -q
+      - name: Build site
+        run: uv run python site/build.py
+      - name: Commit data
+        if: env.FEED == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data/news data/review data/runs.json data/linkcheck.json reference/ledger.csv
+          if git diff --cached --quiet; then echo "No data changes"; exit 0; fi
+          git commit -m "Data update $(date -u +%F)"
+          git pull --rebase   # main may have moved during the run
+          git push
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+      - name: Open an issue for failed links (Mondays)
+        if: always() && github.event_name == 'schedule'
+        run: |
+          [ "$(date -u +%u)" = "1" ] || exit 0
+          uv run python -m tools.linkcheck --report > failed.md
+          if [ -s failed.md ]; then
+            gh issue create -R "$GITHUB_REPOSITORY" --title "Links failed $(date -u +%F)" --body-file failed.md
+          fi
+      - name: Open an issue if the run fails
+        if: failure() && github.event_name == 'schedule'
+        run: gh issue create -R "$GITHUB_REPOSITORY" --title "Update failed $(date -u +%F)" --body "See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  deploy:
+    needs: build
+    if: vars.PAGES_LIVE == 'true'
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

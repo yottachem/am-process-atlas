@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+html,body{margin:0;width:1200px;height:630px;background:#f2f3f0;color:#161917;font-family:"IBM Plex Sans",sans-serif;overflow:hidden}
+.card{display:grid;grid-template-columns:560px 1fr;gap:48px;padding:56px 60px;height:100%;box-sizing:border-box}
+.eyebrow{font:500 15px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:#6c736d}
+h1{font:700 76px/1 "IBM Plex Sans Condensed",sans-serif;margin:18px 0 22px;letter-spacing:-.01em}
+p{font-size:25px;line-height:1.35;color:#474d48;margin:0}
+.facts{margin-top:34px;display:flex;gap:28px;font:500 17px "IBM Plex Mono",monospace;color:#161917}
+.facts b{display:block;font:700 40px "IBM Plex Sans Condensed",sans-serif}
+.url{position:absolute;left:60px;bottom:44px;font:500 17px "IBM Plex Mono",monospace;color:#4a3aa7}
+.heat{display:grid;grid-template-columns:repeat({{ dims|length }},1fr);gap:2px;align-content:center}
+.heat i{display:block;height:11px;border-radius:2px}
+.cap{grid-column:1/-1;font:500 13px "IBM Plex Mono",monospace;color:#6c736d;margin-top:8px;text-transform:uppercase;letter-spacing:.06em}
+</style></head><body>
+<div class="card">
+  <div>
+    <div class="eyebrow">ISO/ASTM 52900 process families</div>
+    <h1>AM Process Atlas</h1>
+    <p>When to use each additive manufacturing process, rated on a published rubric with sourced price, feature, and size bands.</p>
+    <div class="facts"><span><b>{{ n }}</b>processes</span><span><b>{{ n_refs }}</b>references</span><span><b>{{ n_vendors }}</b>vendors</span></div>
+  </div>
+  <div class="heat" aria-hidden="true">
+    {% for row in rows %}{% for v in row %}<i style="background:{{ ramp[v - 1] }}"></i>{% endfor %}{% endfor %}
+    <div class="cap">{{ n }} processes × {{ dims|length }} ratings, 1–5</div>
+  </div>
+</div>
+<div class="url">{{ site_url|replace("https://", "") }}</div>
+</body></html>

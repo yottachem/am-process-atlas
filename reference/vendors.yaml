@@ -1,0 +1,798 @@
+# Vendors named in processes.yaml, with products and entry prices. price is "quote" unless a public source
+# gives one; basis "reported" means trade press or a reseller, not the manufacturer. Ownership history is
+# left out until sourced. Listing is not endorsement.
+vendors:
+- id: 3d-systems
+  name: 3D Systems
+  processes:
+  - sla
+  - dlp
+  - sls
+  - lpbf
+  - pellet
+  - bio
+  - polyjet
+  - wax
+  - cbj
+  products:
+  - name: DMP
+    process: lpbf
+    price: quote
+  - name: EXT Titan
+    process: pellet
+    price: quote
+  - name: Figure 4
+    process: dlp
+    price: quote
+  - name: ProJet 660Pro
+    process: cbj
+    price:
+      value: About $59,650
+      basis: reported
+      source: https://www.aniwaa.com/product/3d-printers/3d-systems-projet-660pro/
+      publisher: Aniwaa
+      as_of: '2026-11-10'
+  - name: ProJet CJP
+    process: cbj
+    price: quote
+  - name: ProJet MJP
+    process: polyjet
+    price: quote
+  - name: ProJet MJP 2500W
+    process: wax
+    price: quote
+  - name: ProX 800
+    process: sla
+    price: quote
+  - name: ProX 950
+    process: sla
+    price: quote
+  - name: SLA 750
+    process: sla
+    price: quote
+  - name: Systemic Bio
+    process: bio
+    price: quote
+- id: 3dceram
+  name: 3DCeram
+  processes:
+  - lcm
+  products: []
+- id: 3ntr
+  name: 3ntr
+  processes:
+  - ifdm
+  products: []
+- id: 9t-labs
+  name: 9T Labs
+  processes:
+  - cf
+  products: []
+- id: additec
+  name: ADDiTEC
+  processes:
+  - lmj
+  products:
+  - name: ElemX
+    process: lmj
+    price: quote
+- id: addup
+  name: AddUp
+  processes:
+  - ded
+  products: []
+- id: admatec
+  name: Admatec
+  processes:
+  - lcm
+  - lmm
+  products: []
+- id: anisoprint
+  name: Anisoprint
+  processes:
+  - cf
+  products: []
+- id: anycubic
+  name: Anycubic
+  processes:
+  - msla
+  - fff
+  products: []
+- id: apis-cor
+  name: Apis Cor
+  processes:
+  - conc
+  products: []
+- id: arburg
+  name: Arburg
+  processes:
+  - apf
+  products:
+  - name: Freeformer
+    process: apf
+    price: quote
+- id: arc-impact
+  name: Arc Impact
+  processes:
+  - mbj
+  products: []
+- id: asiga
+  name: Asiga
+  processes:
+  - dlp
+  products:
+  - name: MAX 2
+    process: dlp
+    price:
+      value: $9,990
+      basis: list
+      source: https://voxeldental.com/products/asiga-max-2
+      publisher: Voxel Dental (reseller)
+      as_of: '2026-11-10'
+- id: aspect-biosystems
+  name: Aspect Biosystems
+  processes:
+  - bio
+  products: []
+- id: bambu-lab
+  name: Bambu Lab
+  processes:
+  - fff
+  products:
+  - name: A1 mini
+    process: fff
+    price:
+      value: $299
+      basis: reported
+      source: https://all3dp.com/1/bambu-lab-a1-mini-review/
+      publisher: All3DP
+      as_of: '2026-11-10'
+- id: bico
+  name: BICO
+  processes:
+  - bio
+  products:
+  - name: CELLINK
+    process: bio
+    price: quote
+- id: blt
+  name: BLT
+  processes:
+  - lpbf
+  products: []
+- id: boston-micro-fabrication
+  name: Boston Micro Fabrication
+  processes:
+  - pusl
+  products:
+  - name: microArch
+    process: pusl
+    price: quote
+- id: caracol
+  name: Caracol
+  processes:
+  - pellet
+  products: []
+- id: carbon
+  name: Carbon
+  processes:
+  - clip
+  products:
+  - name: L1
+    process: clip
+    price: quote
+  - name: M2
+    process: clip
+    price: quote
+  - name: M3
+    process: clip
+    price:
+      value: From about $25,000 a year (subscription)
+      basis: reported
+      source: https://carbon3D.com/products
+      publisher: Carbon
+      as_of: '2026-11-10'
+- id: cead
+  name: CEAD
+  processes:
+  - pellet
+  products: []
+- id: cincinnati
+  name: Cincinnati
+  processes:
+  - pellet
+  products:
+  - name: BAAM
+    process: pellet
+    price: quote
+- id: cobod
+  name: COBOD
+  processes:
+  - conc
+  products:
+  - name: BOD2
+    process: conc
+    price:
+      value: $750,000 to $2 million by configuration
+      basis: reported
+      source: https://www.aniwaa.com/product/3d-printers/cobod-bod2/
+      publisher: Aniwaa
+      as_of: '2026-11-10'
+- id: colibrium-additive
+  name: Colibrium Additive
+  processes:
+  - lpbf
+  - ebm
+  products:
+  - name: Arcam
+    process: ebm
+    price: quote
+- id: continuous-composites
+  name: Continuous Composites
+  processes:
+  - cf
+  products: []
+- id: creality
+  name: Creality
+  processes:
+  - fff
+  products: []
+- id: dmg-mori
+  name: DMG Mori
+  processes:
+  - ded
+  products: []
+- id: elegoo
+  name: Elegoo
+  processes:
+  - msla
+  - fff
+  products:
+  - name: Saturn 4 Ultra
+    process: msla
+    price:
+      value: $399 at launch
+      basis: reported
+      source: https://makezine.com/article/digital-fabrication/3d-printing-workshop/3d-printer-review-elegoo-saturn-4-ultra
+      publisher: 'Make:'
+      as_of: '2026-11-10'
+- id: eos
+  name: EOS
+  processes:
+  - sls
+  - htsls
+  - lpbf
+  products:
+  - name: P 770 HT
+    process: htsls
+    price: quote
+  - name: P 810
+    process: htsls
+    price: quote
+- id: eplus3d
+  name: Eplus3D
+  processes:
+  - lpbf
+  products: []
+- id: etec-envisiontec
+  name: ETEC/EnvisionTEC
+  processes:
+  - dlp
+  products: []
+- id: exone
+  name: ExOne
+  processes:
+  - sbj
+  products:
+  - name: S-Max
+    process: sbj
+    price:
+      value: From $1.4 million
+      basis: reported
+      source: https://www.aniwaa.com/product/3d-printers/exone-s-max/
+      publisher: Aniwaa
+      as_of: '2026-11-10'
+- id: fabric8labs
+  name: Fabric8Labs
+  processes:
+  - ecam
+  products: []
+- id: fabrisonic
+  name: Fabrisonic
+  processes:
+  - uam
+  products: []
+- id: farsoon
+  name: Farsoon
+  processes:
+  - sls
+  - htsls
+  - lpbf
+  products:
+  - name: high-temperature systems
+    process: htsls
+    price: quote
+- id: formalloy
+  name: Formalloy
+  processes:
+  - ded
+  products: []
+- id: formlabs
+  name: Formlabs
+  processes:
+  - sla
+  - msla
+  - sls
+  products:
+  - name: Form 3+
+    process: sla
+    price:
+      value: $3,499–3,750
+      basis: reported
+      source: https://www.tomsguide.com/reviews/formlabs-form-3-plus-3d-printer
+      publisher: Tom's Guide
+      as_of: '2026-11-10'
+    status:
+      text: Being phased out; sold from remaining stock and reconditioned units
+      source: https://www.additive-x.com/blog/the-form-4-printer-upgrade-formlabs-discontinue-form-3
+  - name: Form 3L
+    process: sla
+    price: quote
+- id: forward-am
+  name: Forward AM
+  processes:
+  - bmfff
+  products:
+  - name: Ultrafuse metal filaments
+    process: bmfff
+    price: quote
+- id: freemelt
+  name: Freemelt
+  processes:
+  - ebm
+  products: []
+- id: gefertec
+  name: Gefertec
+  processes:
+  - waam
+  products: []
+- id: grob
+  name: Grob
+  processes:
+  - lmj
+  products: []
+- id: headmade-materials
+  name: Headmade Materials
+  processes:
+  - cmf
+  products: []
+- id: heidelberg-instruments
+  name: Heidelberg Instruments
+  processes:
+  - tpp
+  products: []
+- id: heygears
+  name: HeyGears
+  processes:
+  - msla
+  products: []
+- id: hp
+  name: HP
+  processes:
+  - mjf
+  - mbj
+  products:
+  - name: Jet Fusion 5200 series
+    process: mjf
+    price:
+      value: From about $250,000
+      basis: reported
+      source: https://www.aniwaa.com/product/3d-printers/hp-jet-fusion-5200/
+      publisher: Aniwaa
+      as_of: '2026-11-10'
+  - name: Jet Fusion 5400 series
+    process: mjf
+    price: quote
+  - name: Metal Jet
+    process: mbj
+    price: quote
+- id: hyrel
+  name: Hyrel
+  processes:
+  - diw
+  products: []
+- id: icon
+  name: ICON
+  processes:
+  - conc
+  products: []
+- id: impact-innovations
+  name: Impact Innovations
+  processes:
+  - cold
+  products: []
+- id: impossible-objects
+  name: Impossible Objects
+  processes:
+  - cbam
+  products: []
+- id: incus
+  name: Incus
+  processes:
+  - lmm
+  products:
+  - name: Hammer Lab35
+    process: lmm
+    price: quote
+- id: inkbit
+  name: Inkbit
+  processes:
+  - vcj
+  products: []
+- id: intamsys
+  name: Intamsys
+  processes:
+  - ifdm
+  products: []
+- id: jeol
+  name: JEOL
+  processes:
+  - ebm
+  products: []
+- id: keyence
+  name: Keyence
+  processes:
+  - polyjet
+  products:
+  - name: Agilista
+    process: polyjet
+    price: quote
+- id: lincoln-electric
+  name: Lincoln Electric
+  processes:
+  - waam
+  products: []
+- id: lithoz
+  name: Lithoz
+  processes:
+  - lcm
+  products: []
+- id: markforged
+  name: Markforged
+  processes:
+  - cf
+  - bmfff
+  products:
+  - name: Mark Two
+    process: cf
+    price:
+      value: About $20,000
+      basis: reported
+      source: https://www.aniwaa.com/product/3d-printers/markforged-mark-two/
+      publisher: Aniwaa
+      as_of: '2026-11-10'
+  - name: Metal X
+    process: bmfff
+    price: quote
+- id: meltio
+  name: Meltio
+  processes:
+  - ded
+  products:
+  - name: M450
+    process: ded
+    price:
+      value: About $154,000
+      basis: list
+      source: https://matterhackers.com/store/l/meltio-m450-wire-laser-metal-3d-printer
+      publisher: MatterHackers (reseller)
+      as_of: '2026-11-10'
+- id: microlight3d
+  name: Microlight3D
+  processes:
+  - tpp
+  products: []
+- id: mighty-buildings
+  name: Mighty Buildings
+  processes:
+  - conc
+  products: []
+- id: mimaki
+  name: Mimaki
+  processes:
+  - polyjet
+  products: []
+- id: mx3d
+  name: MX3D
+  processes:
+  - waam
+  products: []
+- id: nano-dimension
+  name: Nano Dimension
+  processes:
+  - mbj
+  products: []
+- id: nanoscribe
+  name: Nanoscribe
+  processes:
+  - tpp
+  products: []
+- id: nikon-slm-solutions
+  name: Nikon SLM Solutions
+  processes:
+  - lpbf
+  products: []
+- id: nscrypt
+  name: nScrypt
+  processes:
+  - diw
+  products: []
+- id: optomec
+  name: Optomec
+  processes:
+  - ded
+  products: []
+- id: phrozen
+  name: Phrozen
+  processes:
+  - msla
+  products: []
+- id: prodways
+  name: Prodways
+  processes:
+  - lcm
+  - sls
+  products: []
+- id: prusa
+  name: Prusa
+  processes:
+  - msla
+  - fff
+  products:
+  - name: SL1S
+    process: msla
+    price: quote
+- id: raise3d
+  name: Raise3D
+  processes:
+  - ifdm
+  products: []
+- id: rapid-shape
+  name: Rapid Shape
+  processes:
+  - dlp
+  products: []
+- id: readily3d
+  name: Readily3D
+  processes:
+  - vol
+  - bio
+  products: []
+- id: renishaw
+  name: Renishaw
+  processes:
+  - lpbf
+  products: []
+- id: roboze
+  name: Roboze
+  processes:
+  - ifdm
+  products: []
+- id: sciaky
+  name: Sciaky
+  processes:
+  - waam
+  products:
+  - name: EBAM
+    process: waam
+    price: quote
+- id: sinterit
+  name: Sinterit
+  processes:
+  - sls
+  products:
+  - name: Lisa X
+    process: sls
+    price:
+      value: $23,990
+      basis: reported
+      source: https://3dprintingindustry.com/news/sinterit-unveils-new-ten-times-faster-lisa-x-ahead-of-formnext-technical-specifications-and-pricing-199355/
+      publisher: 3D Printing Industry
+      as_of: '2026-11-10'
+- id: snapmaker
+  name: Snapmaker
+  processes:
+  - fff
+  products: []
+- id: solidscape
+  name: Solidscape
+  processes:
+  - wax
+  products:
+  - name: S500
+    process: wax
+    price:
+      value: $30,000–100,000
+      basis: reported
+      source: https://www.aniwaa.com/product/3d-printers/solidscape-s500/
+      publisher: Aniwaa
+      as_of: '2026-11-10'
+- id: spee3d
+  name: SPEE3D
+  processes:
+  - cold
+  products: []
+- id: sprintray
+  name: SprintRay
+  processes:
+  - dlp
+  products: []
+- id: stratasys
+  name: Stratasys
+  processes:
+  - sla
+  - dlp
+  - hss
+  - ifdm
+  - polyjet
+  products:
+  - name: F-series
+    process: ifdm
+    price: quote
+  - name: F3300
+    process: ifdm
+    price: quote
+  - name: F900
+    process: ifdm
+    price: quote
+  - name: H350
+    process: hss
+    price:
+      value: $150,000–310,000
+      basis: reported
+      source: https://www.aniwaa.com/product/3d-printers/stratasys-h350/
+      publisher: Aniwaa
+      as_of: '2026-11-10'
+  - name: J-series
+    process: polyjet
+    price: quote
+  - name: J55
+    process: polyjet
+    price:
+      value: About $99,000
+      basis: reported
+      source: https://3dprintingindustry.com/news/stratasys-launches-the-j55-color-3d-printer-technical-specifications-and-pricing-171209/
+      publisher: 3D Printing Industry
+      as_of: '2026-11-10'
+  - name: Neo
+    process: sla
+    price: quote
+  - name: Origin
+    process: dlp
+    price: quote
+  - name: P3
+    process: dlp
+    price: quote
+- id: thermwood
+  name: Thermwood
+  processes:
+  - pellet
+  products: []
+- id: titomic
+  name: Titomic
+  processes:
+  - cold
+  products: []
+- id: trumpf
+  name: Trumpf
+  processes:
+  - lpbf
+  - ded
+  products: []
+- id: ultimaker
+  name: UltiMaker
+  processes:
+  - ifdm
+  products:
+  - name: Factor
+    process: ifdm
+    price: quote
+  - name: Method
+    process: ifdm
+    price: quote
+  - name: Method XL
+    process: ifdm
+    price:
+      value: $13,999
+      basis: reported
+      source: https://3dprintingindustry.com/news/ultimaker-launches-new-method-xl-for-affordable-industrial-scale-3d-printing-technical-specifications-and-pricing-222258/
+      publisher: 3D Printing Industry
+      as_of: '2026-11-10'
+- id: uniformation
+  name: UniFormation
+  processes:
+  - msla
+  products: []
+- id: uniontech
+  name: UnionTech
+  processes:
+  - sla
+  products: []
+- id: upnano
+  name: UpNano
+  processes:
+  - tpp
+  products: []
+- id: velo3d
+  name: Velo3D
+  processes:
+  - lpbf
+  products: []
+- id: viscotec
+  name: ViscoTec
+  processes:
+  - diw
+  products:
+  - name: dispensing heads
+    process: diw
+    price: quote
+- id: voltera
+  name: Voltera
+  processes:
+  - diw
+  products: []
+- id: voxeljet
+  name: voxeljet
+  processes:
+  - hss
+  - sbj
+  products:
+  - name: VX1000 HSS
+    process: hss
+    price: quote
+- id: waam3d
+  name: WAAM3D
+  processes:
+  - waam
+  products: []
+- id: wayland-additive
+  name: Wayland Additive
+  processes:
+  - ebm
+  products: []
+- id: weber
+  name: Weber
+  processes:
+  - pellet
+  products: []
+- id: xact-metal
+  name: Xact Metal
+  processes:
+  - lpbf
+  products:
+  - name: XM200G
+    process: lpbf
+    price:
+      value: $90,000
+      basis: reported
+      source: https://www.tctmagazine.com/xact-metal-launches-xm200g-metal-3d-printer-drops-price-of-x/
+      publisher: TCT Magazine
+      as_of: '2026-11-10'
+- id: xjet
+  name: XJet
+  processes:
+  - npj
+  products:
+  - name: Carmel 1400C
+    process: npj
+    price:
+      value: From $649,000
+      basis: reported
+      source: https://www.aniwaa.com/product/3d-printers/xjet-carmel-1400c/
+      publisher: Aniwaa
+      as_of: '2026-11-10'
+- id: xolo
+  name: xolo
+  processes:
+  - vol
+  products: []

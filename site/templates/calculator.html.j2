@@ -1,0 +1,46 @@
+{% extends "base.html.j2" %}
+{% block title %}Buy vs outsource calculator{% endblock %}
+{% block description %}Break-even calculator for additive manufacturing: when owning a 3D printer costs less per part than a service bureau quote, from your own system price, material, labor, utilization, and volume.{% endblock %}
+{% block body %}
+<div style="display:grid;gap:22px">
+<header class="head"><h1>Buy vs outsource</h1>
+<p class="lede">At what volume does owning a printer cost less per part than a service quote? Enter your own figures; every field starts at a placeholder, not a market value. The model counts depreciation, service, material, consumables, labor, and failed builds. <a href="methods.html#calculator">How it works</a>.</p></header>
+
+<div class="calc">
+<form class="panel calc-in" id="k-form" onsubmit="return false" aria-label="Inputs">
+  <div class="ctl"><label for="k-preset">Printer</label><select id="k-preset"><option value="">Custom printer</option><optgroup label="My printers" id="k-mine" hidden></optgroup><optgroup label="Sourced example prices">{% for p in presets %}<option value="{{ p.id }}">{{ p.label }} · {{ p.process }}</option>{% endfor %}</optgroup></select>
+  <p class="sub" id="k-preset-note"></p></div>
+  <div class="ctl" id="f-name"><label for="k-name">Printer name <span class="u">optional</span></label><input type="text" id="k-name" maxlength="60" autocomplete="off" placeholder="e.g. the model you are quoting">
+  <div class="seg"><button type="button" class="chip" id="k-save">Save to my printers</button><button type="button" class="chip" id="k-del" hidden>Remove</button></div>
+  <span class="sub" id="k-save-note">Saves every input below under this name, in this browser only.</span></div>
+{% for g in groups %}
+  <fieldset><legend>{{ g.name }}</legend>
+  {% if g.name == "Material" %}<div class="ctl"><span class="lbl" id="k-unit-l">Material priced</span><div class="seg" id="k-unit" role="group" aria-labelledby="k-unit-l"><button type="button" class="chip" data-v="kg" aria-pressed="true">Per kg</button><button type="button" class="chip" data-v="L" aria-pressed="false">Per liter</button></div></div>{% endif %}
+  {% for k, label, unit, d, step, help in g.inputs %}<div class="ctl kf" id="f-{{ k }}"><label for="k-{{ k }}">{{ label }} <span class="u">{{ unit }}</span></label><input type="number" id="k-{{ k }}" name="{{ k }}" value="{{ d }}" min="0" step="{{ step }}" inputmode="decimal" aria-describedby="h-{{ k }}"><span class="sub" id="h-{{ k }}">{{ help }}</span></div>
+  {% endfor %}</fieldset>
+{% endfor %}
+  <button type="button" class="chip" id="k-reset">Reset to placeholders</button>
+</form>
+
+<div class="calc-top">
+  <p class="warn" id="k-err" hidden></p>
+  <div class="tiles" id="k-tiles" aria-live="polite"></div>
+</div>
+<div class="calc-out">
+  <section style="display:grid;gap:8px">
+    <h2>Cost per part by annual volume</h2>
+    <div class="legend" aria-hidden="true"><span class="mleg"><svg width="22" height="10"><line x1="1" x2="21" y1="5" y2="5" stroke="var(--c-in)" stroke-width="2"/></svg>In-house</span><span class="mleg"><svg width="22" height="10"><line x1="1" x2="21" y1="5" y2="5" stroke="var(--c-out)" stroke-width="2"/></svg>Service quote</span></div>
+    <div class="mapbox" id="k-box"><svg id="k-svg" role="img" aria-label="Cost per part against annual volume, in-house and outsourced" viewBox="0 0 800 380"></svg><div class="tip" id="k-tip" hidden></div></div>
+    <p class="sub">Log scales. Steps appear where volume outgrows one printer and another is added.</p>
+  </section>
+  <section style="display:grid;gap:8px"><h2>Where the in-house cost goes</h2>
+    <div class="tframe"><table id="k-break"></table></div></section>
+  <section style="display:grid;gap:8px"><h2>At other volumes</h2>
+    <div class="tframe"><table id="k-vol"></table></div></section>
+</div>
+</div>
+<noscript><p class="sub">The calculator needs JavaScript. The formulas are on the <a href="methods.html#calculator">methods page</a>.</p></noscript>
+</div>
+<script type="application/json" id="calc-data">{{ payload|safe }}</script>
+<script src="calculator.js"></script>
+{% endblock %}
