@@ -156,34 +156,92 @@
   $("#g-fam").innerHTML = `<option value="">All families</option>` + D.families.map(f => `<option value="${f.id}">${f.code} · ${esc(f.name)}</option>`).join("");
   ["#x-ax", "#y-ax", "#g-fam"].forEach(s => $(s).addEventListener("change", drawMap));
   const hash = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0; return Math.abs(h); };
+  // monospace width estimate (IBM Plex Mono is 0.6em a character)
+  const textW = (s, fs) => s.length * fs * 0.6;
+  // split a tick label into at most two lines when it is wider than maxW, breaking after an en dash or at a space
+  const wrapTick = (s, fs, maxW) => {
+    if (textW(s, fs) <= maxW) return [s];
+    let best = null;
+    for (let i = 1; i < s.length; i++) {
+      const a = s[i - 1] === "–" ? s.slice(0, i) : s[i] === " " ? s.slice(0, i) : null;
+      if (a === null) continue;
+      const b = s.slice(i).trim(), m = Math.max(a.length, b.length);
+      if (!best || m < best[2]) best = [a, b, m];
+    }
+    return best ? [best[0], best[1]] : [s];
+  };
+  const overlap = (a, b) => Math.max(0, Math.min(a[2], b[2]) - Math.max(a[0], b[0])) * Math.max(0, Math.min(a[3], b[3]) - Math.max(a[1], b[1]));
   function drawMap() {
-    const svg = $("#map-svg"), box = $("#mapbox");
-    const W = Math.max(320, box.clientWidth - 12), H = Math.round(Math.min(600, Math.max(380, W * .6)));
+    const svg = $("#map-svg"), box = $("#mapbox"), key = $("#mapkey");
+    const W = Math.max(300, box.clientWidth - 12), narrow = W < 560;
+    const H = Math.round(Math.min(600, Math.max(narrow ? 420 : 380, W * .6)));
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const ax = AX.find(a => a.k === $("#x-ax").value), ay = AX.find(a => a.k === $("#y-ax").value), hf = $("#g-fam").value;
     const pts = P.filter(p => ax.get(p) != null && ay.get(p) != null);
-    const M = { l: W < 520 ? 92 : 112, r: 18, t: 14, b: 46 };
-    const sx = v => M.l + (v + .5) / ax.ticks.length * (W - M.r - M.l), sy = v => (H - M.b) - (v + .5) / ay.ticks.length * (H - M.b - M.t);
-    const cw = (W - M.r - M.l) / ax.ticks.length, ch = (H - M.b - M.t) / ay.ticks.length;
-    // spread points that share a cell on a small deterministic grid so none hide another
-    const cells = {};
-    pts.forEach(p => { const key = ax.get(p) + "," + ay.get(p); (cells[key] = cells[key] || []).push(p); });
+    const fs = narrow ? 10 : 11;
+    // left margin sized to the widest y tick (two lines allowed on phones), plus the rotated axis title
+    const yLines = ay.ticks.map(t => wrapTick(t, fs, narrow ? 62 : 96));
+    const yTickW = Math.max(...yLines.flat().map(s => textW(s, fs)));
+    const M = { l: Math.round(Math.max(44, 30 + yTickW + 10)), r: narrow ? 8 : 18, t: 14, b: 46 };
+    const cw = (W - M.r - M.l) / ax.ticks.length;
+    const xLines = ax.ticks.map(t => wrapTick(t, fs, cw - 6));
+    if (xLines.some(l => l.length > 1)) M.b += 12;
+    const ch = (H - M.b - M.t) / ay.ticks.length;
+    const sx = v => M.l + (v + .5) * cw, sy = v => (H - M.b) - (v + .5) * ch;
+    const tspans = (lines, x, lh) => lines.map((s, i) => `<tspan x="${x}" dy="${i ? lh : 0}">${esc(s)}</tspan>`).join("");
     let g = "";
-    ax.ticks.forEach((t, i) => { const X = sx(i); g += `<line x1="${X - cw / 2}" x2="${X - cw / 2}" y1="${M.t}" y2="${H - M.b}" stroke="var(--line)"/><text x="${X}" y="${H - M.b + 16}" text-anchor="middle" font-size="11" fill="var(--ink-3)">${esc(t)}</text>`; });
-    ay.ticks.forEach((t, i) => { const Y = sy(i); g += `<line x1="${M.l}" x2="${W - M.r}" y1="${Y + ch / 2}" y2="${Y + ch / 2}" stroke="var(--line)"/><text x="${M.l - 8}" y="${Y + 4}" text-anchor="end" font-size="11" fill="var(--ink-3)">${esc(t)}</text>`; });
+    ax.ticks.forEach((t, i) => { const X = sx(i); g += `<line x1="${X - cw / 2}" x2="${X - cw / 2}" y1="${M.t}" y2="${H - M.b}" stroke="var(--line)"/><text x="${X}" y="${H - M.b + 16}" text-anchor="middle" font-size="${fs}" fill="var(--ink-3)">${tspans(xLines[i], X, fs + 2)}</text>`; });
+    ay.ticks.forEach((t, i) => { const Y = sy(i), n = yLines[i].length; g += `<line x1="${M.l}" x2="${W - M.r}" y1="${Y + ch / 2}" y2="${Y + ch / 2}" stroke="var(--line)"/><text x="${M.l - 8}" y="${Y + 4 - (n - 1) * (fs + 2) / 2}" text-anchor="end" font-size="${fs}" fill="var(--ink-3)">${tspans(yLines[i], M.l - 8, fs + 2)}</text>`; });
     g += `<text x="${(M.l + W - M.r) / 2}" y="${H - 8}" text-anchor="middle" font-size="12" fill="var(--ink-2)">${esc(ax.l)}</text>`;
     g += `<text transform="translate(14 ${(M.t + H - M.b) / 2}) rotate(-90)" text-anchor="middle" font-size="12" fill="var(--ink-2)">${esc(ay.l)}</text>`;
-    let dots = "", labels = "";
+    // spread points that share a cell on a small deterministic grid so none hide another
+    const cells = {};
+    pts.forEach(p => { const k = ax.get(p) + "," + ay.get(p); (cells[k] = cells[k] || []).push(p); });
+    const R = narrow && hf ? 8 : 6, pos = [];
     Object.values(cells).forEach(list => {
       list.sort((a, b) => hash(a.id) - hash(b.id));
-      const n = list.length, cols = Math.ceil(Math.sqrt(n)), rowsN = Math.ceil(n / cols), step = Math.min(18, (cw - 16) / cols, (ch - 16) / rowsN);
-      list.forEach((p, i) => {
-        const cx = sx(ax.get(p)) + ((i % cols) - (cols - 1) / 2) * step, cy = sy(ay.get(p)) + (Math.floor(i / cols) - (rowsN - 1) / 2) * step;
-        const dim = hf && p.family !== hf;
-        dots += `<a href="${href(p)}" class="pt" data-id="${p.id}" data-x="${cx}" data-y="${cy}" style="opacity:${dim ? .15 : 1}" aria-label="${esc(p.name)}"><circle cx="${cx}" cy="${cy}" r="12" fill="transparent"/><circle cx="${cx}" cy="${cy}" r="6" fill="var(--${p.group === "mature" ? "m1" : p.group === "industrial" ? "m2" : "m3"})" stroke="var(--surface)" stroke-width="2"/></a>`;
-        if (hf && !dim) { const right = cx < W - 160; labels += `<text x="${cx + (right ? 10 : -10)}" y="${cy + 4}" text-anchor="${right ? "start" : "end"}" font-size="11.5" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" style="paint-order:stroke;pointer-events:none">${esc(p.name)}</text>`; }
-      });
+      const n = list.length, cols = Math.ceil(Math.sqrt(n)), rowsN = Math.ceil(n / cols);
+      const step = Math.min(narrow && hf ? 19 : 18, (cw - 8) / cols, (ch - 8) / rowsN);
+      list.forEach((p, i) => pos.push({ p, cx: sx(ax.get(p)) + ((i % cols) - (cols - 1) / 2) * step, cy: sy(ay.get(p)) + (Math.floor(i / cols) - (rowsN - 1) / 2) * step, dim: hf && p.family !== hf }));
     });
+    const fill = p => `var(--${p.group === "mature" ? "m1" : p.group === "industrial" ? "m2" : "m3"})`;
+    const lit = pos.filter(d => !d.dim).sort((a, b) => a.cx - b.cx || a.cy - b.cy);
+    let dots = "", labels = "";
+    pos.filter(d => d.dim).concat(lit).forEach(d => {
+      const r = d.dim ? 5 : R, num = hf && narrow && !d.dim ? lit.indexOf(d) + 1 : 0;
+      dots += `<a href="${href(d.p)}" class="pt" data-id="${d.p.id}" data-x="${d.cx}" data-y="${d.cy}" style="opacity:${d.dim ? .15 : 1}" aria-label="${esc(d.p.name)}"><circle cx="${d.cx}" cy="${d.cy}" r="12" fill="transparent"/><circle cx="${d.cx}" cy="${d.cy}" r="${r}" fill="${fill(d.p)}" stroke="var(--surface)" stroke-width="${num ? 1.5 : 2}"/>`
+        + (num ? `<text x="${d.cx}" y="${d.cy + 3.3}" text-anchor="middle" font-size="9.5" font-weight="600" fill="#fff" style="pointer-events:none">${num}</text>` : "") + `</a>`;
+    });
+    if (hf && narrow) {
+      // phones: numbered dots and a key, since full names do not fit in cells this small
+      key.innerHTML = lit.map((d, i) => `<li><span class="kn" style="background:${fill(d.p)}">${i + 1}</span><a href="${href(d.p)}">${esc(d.p.name)}</a></li>`).join("");
+      key.hidden = !lit.length;
+    } else {
+      key.hidden = true; key.innerHTML = "";
+      if (hf) {
+        // wider screens: name every highlighted dot, taking the first of ten spots that overlaps no dot or label
+        const lf = 11.5, lh = 13, placed = lit.map(d => [d.cx - R - 2, d.cy - R - 2, d.cx + R + 2, d.cy + R + 2]);
+        const faint = pos.filter(d => d.dim).map(d => [d.cx - 5, d.cy - 5, d.cx + 5, d.cy + 5]);
+        lit.forEach((d, i) => {
+          const tw = textW(d.p.name, lf), { cx, cy } = d, o = R + 4;
+          const cands = [[cx + o, cy + 4, "start"], [cx - o, cy + 4, "end"], [cx, cy - o - 3, "middle"], [cx, cy + o + 10, "middle"],
+            [cx + o - 2, cy - o, "start"], [cx + o - 2, cy + o + 8, "start"], [cx - o + 2, cy - o, "end"], [cx - o + 2, cy + o + 8, "end"],
+            [cx, cy - o - 17, "middle", 1], [cx, cy + o + 24, "middle", 1]];
+          const score = c => {
+            const x0 = c[2] === "start" ? c[0] : c[2] === "end" ? c[0] - tw : c[0] - tw / 2, b = [x0, c[1] - lh + 3, x0 + tw, c[1] + 3];
+            const out = b[0] < M.l - 4 || b[2] > W - 2 || b[1] < 0 || b[3] > H - M.b + 2;
+            const hit = placed.reduce((s, q, j) => s + (j === i ? 0 : overlap(b, q)), 0) + .2 * faint.reduce((s, q) => s + overlap(b, q), 0);
+            return [out ? 1 : 0, hit, b];
+          };
+          let best = null;
+          for (const c of cands) { const s = score(c); if (!best || s[0] < best.s[0] || (s[0] === best.s[0] && s[1] < best.s[1] - .5)) best = { c, s }; if (!s[0] && !s[1]) break; }
+          const [tx, ty, anchor, far] = best.c;
+          placed.push(best.s[2]);
+          if (far) labels += `<line x1="${cx}" y1="${cy + (ty < cy ? -R : R)}" x2="${tx}" y2="${ty < cy ? ty + 3 : ty - lh + 3}" stroke="var(--ink-3)" stroke-width="1"/>`;
+          labels += `<text x="${tx}" y="${ty}" text-anchor="${anchor}" font-size="${lf}" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" style="paint-order:stroke;pointer-events:none">${esc(d.p.name)}</text>`;
+        });
+      }
+    }
     svg.innerHTML = g + dots + labels;
     const tip = $("#tip"), byId = Object.fromEntries(P.map(p => [p.id, p]));
     svg.querySelectorAll(".pt").forEach(el => {
