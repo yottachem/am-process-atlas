@@ -31,6 +31,9 @@ def urls(ref):
         for pr in v["products"]:
             for src in ([pr["price"]["source"]] if pr["price"] != "quote" else []) + ([pr["status"]["source"]] if "status" in pr else []):
                 out.setdefault(src, set()).add(v["id"])
+    for pid, n in ref["notes"].items():
+        for r in n.get("refs", []):
+            out.setdefault(r["url"], set()).add(f"note:{pid}")
     for m in ref["materials"]:
         if m["tds_url"]:
             out.setdefault(m["tds_url"], set()).add(m["id"])

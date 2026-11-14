@@ -1,3 +1,4 @@
+import re
 import os
 from pathlib import Path
 
@@ -79,8 +80,18 @@ def test_notes():
     for pid, n in D["notes"].items():
         assert pid in D["process_by_id"]
         assert n.get("author") and n.get("date")
-        words = len(n["body"].split())
+        body = re.sub(r"\s*\[\d[\d,–\- ]*\]", "", n["body"])
+        words = len(body.split())
         assert 60 <= words <= 200, (pid, words)
+        refs = n.get("refs", [])
+        for r in refs:
+            assert r.get("cite") and r.get("title") and r.get("url", "").startswith("https://"), (pid, r)
+        cited = set()
+        for m in re.finditer(r"\[(\d[\d,–\- ]*)\]", n["body"]):
+            for part in m.group(1).split(","):
+                lo, _, hi = part.strip().replace("–", "-").partition("-")
+                cited |= set(range(int(lo), int(hi or lo) + 1))
+        assert cited == set(range(1, len(refs) + 1)), (pid, "every ref cited once in order, no stray markers", cited)
 
 
 def test_build_smoke(tmp_path, monkeypatch):

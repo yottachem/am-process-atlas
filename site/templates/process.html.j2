@@ -28,7 +28,7 @@
 
 {% if note %}
 <section style="display:grid;gap:10px"><h2>Practitioner note</h2>
-<div class="pnote">{% for para in note.body.split("\n\n") %}<p>{{ para }}</p>{% endfor %}<div class="by">{{ note.author }} · {{ note.date }}</div></div></section>
+<div class="pnote">{% for para in note.body.split("\n\n") %}<p>{{ para }}</p>{% endfor %}{% if note.refs %}<ol class="nrefs">{% for r in note.refs %}<li><a href="{{ r.url }}" rel="noopener">{{ r.cite }}</a>, {{ r.title }}</li>{% endfor %}</ol>{% endif %}<div class="by">{{ note.author }} · {{ note.date }}</div></div></section>
 {% elif preview and p.id in note_targets %}
 <section style="display:grid;gap:10px"><h2>Practitioner note</h2><div class="pending">Pending: Josh writes this note from a brief.</div></section>
 {% endif %}

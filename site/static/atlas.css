@@ -161,6 +161,8 @@ td.h span{display:block;padding:9px 0;margin:2px;border-radius:3px}
 .dl p{font-size:15px;margin-top:3px}
 .capl{display:flex;flex-wrap:wrap;gap:6px}
 .pnote{border-left:3px solid var(--accent);background:var(--surface);padding:14px 16px;max-width:80ch;border-radius:0 6px 6px 0}
+.pnote .nrefs{font-size:12px;color:var(--ink-3);margin:10px 0 0;padding-left:20px}
+.pnote .nrefs a{color:inherit}
 .pnote .by{font:12px var(--f-mono);color:var(--ink-3);margin-top:8px}
 .pending{border:1px dashed var(--m2);padding:10px 14px;color:var(--ink-3);font-size:14px;max-width:80ch;border-radius:4px}
 ol.refs{font-size:13.5px;color:var(--ink-2);padding-left:20px;margin:0;display:grid;gap:4px}
