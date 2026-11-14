@@ -1,51 +1,51 @@
 {
  "accept": {
-  "at": "2026-11-12 03:05 UTC",
-  "auto": 2,
+  "at": "2026-11-14 21:44 UTC",
+  "auto": 0,
   "dup": 0,
-  "open": 40,
-  "queued": 16
+  "open": 18,
+  "queued": 15
  },
  "news:bing": {
-  "at": "2026-11-12 03:03 UTC",
+  "at": "2026-11-14 21:44 UTC",
   "companies": 44,
   "error_sample": [],
   "errors": 0,
-  "fetched": 652,
+  "fetched": 654,
   "kept": 612
  },
  "news:gdelt": {
-  "at": "2026-11-12 03:03 UTC",
-  "companies": 1,
+  "at": "2026-11-14 21:44 UTC",
+  "companies": 0,
   "error_sample": [
-   "stratasys: RuntimeError: GDELT rate limit; skipped for the rest of this run"
+   "3d-systems: RuntimeError: GDELT rate limit; skipped for the rest of this run"
   ],
   "errors": 1,
-  "fetched": 11,
-  "kept": 3
+  "fetched": 0,
+  "kept": 0
  },
  "news:gnews": {
-  "at": "2026-11-12 03:03 UTC",
-  "companies": 40,
+  "at": "2026-11-14 21:44 UTC",
+  "companies": 32,
   "error_sample": [],
   "errors": 0,
-  "fetched": 523,
-  "kept": 363
+  "fetched": 206,
+  "kept": 106
  },
  "news:newsroom": {
-  "at": "2026-11-12 03:03 UTC",
-  "companies": 2,
+  "at": "2026-11-14 21:44 UTC",
+  "companies": 1,
   "error_sample": [],
   "errors": 0,
-  "fetched": 4,
-  "kept": 4
+  "fetched": 1,
+  "kept": 1
  },
  "sec": {
-  "at": "2026-11-12 02:48 UTC",
+  "at": "2026-11-14 21:34 UTC",
   "companies": 9,
   "error_sample": [],
   "errors": 0,
-  "fetched": 20,
-  "kept": 9
+  "fetched": 10,
+  "kept": 3
  }
 }

@@ -1,17 +1,9 @@
 {
- "checked": "2026-11-11",
- "n_ok": 127,
- "n_blocked": 6,
- "n_failed": 1,
- "failed": [
-  {
-   "url": "https://fabrisonic.com/wp-content/uploads/2024/04/SonicLayer-7200-R4.pdf",
-   "status": "ConnectionError",
-   "used_by": [
-    "uam"
-   ]
-  }
- ],
+ "checked": "2026-11-14",
+ "n_ok": 138,
+ "n_blocked": 14,
+ "n_failed": 0,
+ "failed": [],
  "blocked": [
   {
    "url": "https://3dprinting.com/metal/cold-metal-fusion-what-is-it",
@@ -28,10 +20,52 @@
    ]
   },
   {
+   "url": "https://doi.org/10.1002/adma.201305506",
+   "status": 403,
+   "used_by": [
+    "note:diw"
+   ]
+  },
+  {
+   "url": "https://doi.org/10.1126/sciadv.1500758",
+   "status": 403,
+   "used_by": [
+    "note:diw"
+   ]
+  },
+  {
+   "url": "https://doi.org/10.1126/science.aaa2397",
+   "status": 403,
+   "used_by": [
+    "note:clip"
+   ]
+  },
+  {
    "url": "https://doi.org/10.1126/science.aau7114",
    "status": 403,
    "used_by": [
     "vol"
+   ]
+  },
+  {
+   "url": "https://doi.org/10.1126/scitranslmed.aaf7704",
+   "status": 403,
+   "used_by": [
+    "note:diw"
+   ]
+  },
+  {
+   "url": "https://doi.org/10.2514/6.2018-4625",
+   "status": 403,
+   "used_by": [
+    "note:lpbf"
+   ]
+  },
+  {
+   "url": "https://doi.org/10.3390/polym10020178",
+   "status": 403,
+   "used_by": [
+    "note:clip"
    ]
   },
   {
@@ -42,10 +76,24 @@
    ]
   },
   {
-   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5457067/",
+   "url": "https://www.metal-am.com/incus-hammer-lab35-metal-am-machine-in-production/",
    "status": 403,
    "used_by": [
-    "bio"
+    "lmm"
+   ]
+  },
+  {
+   "url": "https://www.metal-am.com/slm-solutions-announces-nxg-xii-600e-metal-3d-printer/",
+   "status": 403,
+   "used_by": [
+    "lpbf"
+   ]
+  },
+  {
+   "url": "https://www.nanoscribe.com/en/products/quantum-x-shape/",
+   "status": 403,
+   "used_by": [
+    "tpp"
    ]
   },
   {
