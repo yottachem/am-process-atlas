@@ -15,8 +15,8 @@
 </section>
 
 <section style="display:grid;gap:10px" id="rubric"><h2>Rating rubric</h2>
-<div class="tframe"><table><thead><tr><th>Dimension</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead><tbody>
-{% for k, d in rubric.items() %}<tr><td style="font-weight:600;white-space:nowrap">{{ d.label }}</td>{% for i in [1,2,3,4,5] %}<td>{{ d.levels[i] }}</td>{% endfor %}</tr>{% endfor %}
+<div class="tframe"><table class="stack inl"><thead><tr><th>Dimension</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead><tbody>
+{% for k, d in rubric.items() %}<tr><td style="font-weight:600;white-space:nowrap">{{ d.label }}</td>{% for i in [1,2,3,4,5] %}<td data-label="{{ i }}">{{ d.levels[i] }}</td>{% endfor %}</tr>{% endfor %}
 </tbody></table></div></section>
 
 <section style="display:grid;gap:10px" id="bands"><h2>Bands</h2>

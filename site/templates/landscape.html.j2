@@ -12,11 +12,11 @@
 
 {% for f in family_list %}{% set fps = rows|selectattr("family", "equalto", f.id)|list %}{% if fps %}
 <section class="lfam" style="display:grid;gap:10px"><h2>{{ f.name }}</h2>
-<div class="tframe"><table class="ltbl"><colgroup><col style="width:19%"><col style="width:15%"><col style="width:38%"><col style="width:28%"></colgroup><thead><tr><th>Process</th><th>Entry system</th><th>Vendors</th><th>Public prices</th></tr></thead><tbody>
+<div class="tframe"><table class="ltbl stack"><colgroup><col style="width:19%"><col style="width:15%"><col style="width:38%"><col style="width:28%"></colgroup><thead><tr><th>Process</th><th>Entry system</th><th>Vendors</th><th>Public prices</th></tr></thead><tbody>
 {% for r in fps %}<tr data-s="{{ r.search }}"><td style="font-weight:600;white-space:nowrap"><a href="{{ r.id }}.html">{{ r.name }}</a></td>
-<td class="band" style="white-space:nowrap">{{ r.band }}{% if r.estimated %} <span class="sub">(estimate)</span>{% endif %}</td>
-<td>{{ r.vendors_text }}</td>
-<td>{% for pr in r.prices %}<div><a href="{{ pr.source }}" rel="noopener">{{ pr.vendor }} {{ pr.product }}</a>: {{ pr.value }}{% if pr.basis == "reported" %} <span class="sub">(reported)</span>{% endif %}{% if pr.status %} <span class="sub">({{ pr.status|lower }})</span>{% endif %}</div>{% else %}<span class="sub">{{ r.price_note or "Quote on request" }}</span>{% endfor %}</td></tr>
+<td class="band" style="white-space:nowrap" data-label="Entry system">{{ r.band }}{% if r.estimated %} <span class="sub">(estimate)</span>{% endif %}</td>
+<td data-label="Vendors">{{ r.vendors_text }}</td>
+<td data-label="Public prices">{% for pr in r.prices %}<div><a href="{{ pr.source }}" rel="noopener">{{ pr.vendor }} {{ pr.product }}</a>: {{ pr.value }}{% if pr.basis == "reported" %} <span class="sub">(reported)</span>{% endif %}{% if pr.status %} <span class="sub">({{ pr.status|lower }})</span>{% endif %}</div>{% else %}<span class="sub">{{ r.price_note or "Quote on request" }}</span>{% endfor %}</td></tr>
 {% endfor %}</tbody></table></div></section>
 {% endif %}{% endfor %}
 

@@ -58,6 +58,7 @@
     <span class="count" id="m-count"></span>
     <div class="hlegend">Rating <span class="sw h1"></span>1 <span class="sw h2"></span>2 <span class="sw h3"></span>3 <span class="sw h4"></span>4 <span class="sw h5"></span>5 · click a header to sort · <a href="processes.csv">CSV</a> · <a href="atlas.json">JSON</a></div>
   </div>
+  <p class="note mhint">Scroll sideways for every rating; tap a column heading to sort. The Pick a process tab ranks processes as cards.</p>
   <div class="tframe"><table class="matrix" id="m-tbl">
     <noscript><thead><tr><th>Process</th><th>Family</th>{% for k, d in rubric.items() %}<th>{{ d.label }}</th>{% endfor %}</tr></thead><tbody>
     {% for p in processes %}<tr><td class="nm"><a href="{{ p.id }}.html">{{ p.name }}</a></td><td>{{ families[p.family].code }}</td>{% for k in rubric %}<td class="h"><span class="h{{ p.ratings[k] }}">{{ p.ratings[k] }}</span></td>{% endfor %}</tr>{% endfor %}

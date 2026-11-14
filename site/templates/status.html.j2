@@ -21,10 +21,10 @@
 
 <section style="display:grid;gap:10px"><h2>Events feed</h2>
 <p class="sub">Last run per source. {{ feed.watched }} companies watched; {{ feed.open }} item{{ "" if feed.open == 1 else "s" }} waiting for review. See <a href="methods.html#events">methods</a>.</p>
-<div class="tframe"><table><thead><tr><th>Source</th><th>Last run</th><th>Found</th><th>Kept or queued</th><th>Errors</th></tr></thead><tbody>
-{% for r in feed.runs %}<tr><td>{{ r.label }}</td>{% if r.at %}<td class="band">{{ r.at }}</td>
-{% if r.auto is defined %}<td class="band">{{ r.auto + r.dup + r.queued }} candidates</td><td class="band">{{ r.auto }} auto, {{ r.queued }} queued, {{ r.dup }} duplicates</td><td class="band">0</td>
-{% else %}<td class="band">{{ r.fetched }}</td><td class="band">{{ r.kept }}</td><td class="band">{{ r.errors }}{% if r.errors %} <span class="sub">({{ r.error_sample|join("; ") }})</span>{% endif %}</td>{% endif %}
+<div class="tframe"><table class="stack grid2c"><thead><tr><th>Source</th><th>Last run</th><th>Found</th><th>Kept or queued</th><th>Errors</th></tr></thead><tbody>
+{% for r in feed.runs %}<tr><td>{{ r.label }}</td>{% if r.at %}<td class="band" data-label="Last run">{{ r.at }}</td>
+{% if r.auto is defined %}<td class="band" data-label="Found">{{ r.auto + r.dup + r.queued }} candidates</td><td class="band" data-label="Kept or queued">{{ r.auto }} auto, {{ r.queued }} queued, {{ r.dup }} duplicates</td><td class="band" data-label="Errors">0</td>
+{% else %}<td class="band" data-label="Found">{{ r.fetched }}</td><td class="band" data-label="Kept or queued">{{ r.kept }}</td><td class="band" data-label="Errors">{{ r.errors }}{% if r.errors %} <span class="sub">({{ r.error_sample|join("; ") }})</span>{% endif %}</td>{% endif %}
 {% else %}<td class="band" colspan="4">Not run yet</td>{% endif %}</tr>
 {% endfor %}</tbody></table></div></section>
 

@@ -1,16 +1,16 @@
 {# Side-by-side table for 2–4 processes. compare.js renders the same markup in the browser. #}
 {% macro side(ps) %}
-<div class="tframe"><table class="side" style="--n:{{ ps|length }}"><thead><tr><th scope="col"><span class="vh">Attribute</span></th>{% for p in ps %}<th scope="col"><a href="{{ p.id }}.html">{{ p.name }}</a></th>{% endfor %}</tr></thead><tbody>
-<tr><th scope="row">Family</th>{% for p in ps %}<td>{{ families[p.family].name }}</td>{% endfor %}</tr>
-<tr><th scope="row">Maturity</th>{% for p in ps %}<td>{{ maturity_labels[p.maturity] }}</td>{% endfor %}</tr>
-{% for axis in ["system_price", "min_feature", "max_part"] %}<tr><th scope="row">{{ bands[axis].label }}</th>{% for p in ps %}<td class="band">{{ band_label(axis, p.bands[axis]) }}{% if axis in p.get("estimated", []) %} <span class="sub">(estimate)</span>{% endif %}</td>{% endfor %}</tr>
+<div class="tframe"><table class="side stack" style="--n:{{ ps|length }}"><thead><tr><th scope="col"><span class="vh">Attribute</span></th>{% for p in ps %}<th scope="col"><a href="{{ p.id }}.html">{{ p.name }}</a></th>{% endfor %}</tr></thead><tbody>
+<tr><th scope="row">Family</th>{% for p in ps %}<td data-label="{{ p.name }}">{{ families[p.family].name }}</td>{% endfor %}</tr>
+<tr><th scope="row">Maturity</th>{% for p in ps %}<td data-label="{{ p.name }}">{{ maturity_labels[p.maturity] }}</td>{% endfor %}</tr>
+{% for axis in ["system_price", "min_feature", "max_part"] %}<tr><th scope="row">{{ bands[axis].label }}</th>{% for p in ps %}<td data-label="{{ p.name }}" class="band">{{ band_label(axis, p.bands[axis]) }}{% if axis in p.get("estimated", []) %} <span class="sub">(estimate)</span>{% endif %}</td>{% endfor %}</tr>
 {% endfor %}
-{% for k, d in rubric.items() %}{% set vals = ps|map(attribute="ratings")|map(attribute=k)|list %}<tr class="rr"><th scope="row">{{ d.label }}</th>{% for p in ps %}{% set v = p.ratings[k] %}<td{% if v == vals|max and vals|max != vals|min %} class="lead"{% endif %}><div class="sb"><div class="bar"><i style="width:{{ v * 20 }}%"></i></div><span class="n">{{ v }}</span></div><small>{{ d.levels[v] }}</small></td>{% endfor %}</tr>
+{% for k, d in rubric.items() %}{% set vals = ps|map(attribute="ratings")|map(attribute=k)|list %}<tr class="rr"><th scope="row">{{ d.label }}</th>{% for p in ps %}{% set v = p.ratings[k] %}<td data-label="{{ p.name }}"{% if v == vals|max and vals|max != vals|min %} class="lead"{% endif %}><div class="sb"><div class="bar"><i style="width:{{ v * 20 }}%"></i></div><span class="n">{{ v }}</span></div><small>{{ d.levels[v] }}</small></td>{% endfor %}</tr>
 {% endfor %}
-<tr><th scope="row">Materials</th>{% for p in ps %}<td>{{ p.material_text }}</td>{% endfor %}</tr>
-<tr><th scope="row">Capabilities</th>{% for p in ps %}<td>{% for c in p.capabilities %}{{ capabilities[c] }}{% if not loop.last %}, {% endif %}{% else %}<span class="sub">None tagged</span>{% endfor %}</td>{% endfor %}</tr>
-<tr><th scope="row">Choose it when</th>{% for p in ps %}<td>{{ p.choose }}</td>{% endfor %}</tr>
-<tr><th scope="row">Avoid it when</th>{% for p in ps %}<td>{{ p.avoid }}</td>{% endfor %}</tr>
-<tr><th scope="row">Vendors</th>{% for p in ps %}<td>{{ p.vendors_text }}</td>{% endfor %}</tr>
+<tr><th scope="row">Materials</th>{% for p in ps %}<td data-label="{{ p.name }}">{{ p.material_text }}</td>{% endfor %}</tr>
+<tr><th scope="row">Capabilities</th>{% for p in ps %}<td data-label="{{ p.name }}">{% for c in p.capabilities %}{{ capabilities[c] }}{% if not loop.last %}, {% endif %}{% else %}<span class="sub">None tagged</span>{% endfor %}</td>{% endfor %}</tr>
+<tr><th scope="row">Choose it when</th>{% for p in ps %}<td data-label="{{ p.name }}">{{ p.choose }}</td>{% endfor %}</tr>
+<tr><th scope="row">Avoid it when</th>{% for p in ps %}<td data-label="{{ p.name }}">{{ p.avoid }}</td>{% endfor %}</tr>
+<tr><th scope="row">Vendors</th>{% for p in ps %}<td data-label="{{ p.name }}">{{ p.vendors_text }}</td>{% endfor %}</tr>
 </tbody></table></div>
 {% endmacro %}

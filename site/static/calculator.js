@@ -169,7 +169,7 @@ if (typeof document !== "undefined") (() => {
     $("#k-vol").innerHTML = `<thead><tr><th>Parts a year</th><th style="text-align:right">Printers</th><th style="text-align:right">In-house per part</th><th style="text-align:right">Service quote</th><th>Cheaper</th></tr></thead><tbody>`
       + vs.map(n => { const c = costAt(r, n), m = Math.max(1, Math.ceil(n / r.cap));
         const tag = n === Math.round(ST.demand) ? " (your volume)" : r.breakeven && n === Math.ceil(r.breakeven) && r.reachable ? " (break-even)" : "";
-        return `<tr${tag ? ' class="tot"' : ""}><td class="band">${int(n)}${tag}</td><td class="band" style="text-align:right">${m}</td><td class="band" style="text-align:right">${money(c)}</td><td class="band" style="text-align:right">${money(ST.quote)}</td><td>${Math.abs(c - ST.quote) < 0.005 ? "Equal" : c < ST.quote ? "In-house" : "Outsource"}</td></tr>`; }).join("")
+        return `<tr${tag ? ' class="tot"' : ""}><td class="band">${int(n)}${tag}</td><td class="band" style="text-align:right" data-label="Printers">${m}</td><td class="band" style="text-align:right" data-label="In-house per part">${money(c)}</td><td class="band" style="text-align:right" data-label="Service quote">${money(ST.quote)}</td><td data-label="Cheaper">${Math.abs(c - ST.quote) < 0.005 ? "Equal" : c < ST.quote ? "In-house" : "Outsource"}</td></tr>`; }).join("")
       + "</tbody>";
   }
 

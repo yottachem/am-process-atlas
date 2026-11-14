@@ -34,16 +34,16 @@
 
 <section style="display:grid;gap:10px"><h2>All grades</h2>
 <p class="sub">Values read as in-plane / Z where the sheet gives both. Tensile strength is the ultimate value (the larger of yield and break). Modulus in GPa. A dash means the sheet does not publish that value. Grouped by the use the vendor sells each grade for; dental and biomedical grades are listed for their mechanical data only, not as a statement about clearance for any device. Click a point to jump to its row.</p>
-<div class="tframe"><table class="mtbl"><thead><tr><th>Grade</th><th>Process</th><th>Class</th><th>Tensile, MPa</th><th>Modulus, GPa</th><th>Elongation, %</th><th>HDT 0.45 MPa, °C</th><th>Standard</th><th>Orientation</th><th>Condition</th><th>Source</th></tr></thead>
+<div class="tframe"><table class="mtbl stack"><thead><tr><th>Grade</th><th>Process</th><th>Class</th><th>Tensile, MPa</th><th>Modulus, GPa</th><th>Elongation, %</th><th>HDT 0.45 MPa, °C</th><th>Standard</th><th>Orientation</th><th>Condition</th><th>Source</th></tr></thead>
 {% for u, ul in use_labels.items() %}{% set rows = grades|selectattr("use", "equalto", u)|sort(attribute="grade") %}{% if rows %}
 <tbody data-u="{{ u }}"><tr class="grp"><th colspan="11"><span>{{ ul }} <span class="sub">{{ rows|length }} grades</span></span></th></tr>
 {% for m in rows %}<tr id="g-{{ m.id }}" data-p="{{ m.process }}" data-c="{{ m.class }}">
 <td class="nm">{{ m.grade }}<div class="sub">{{ m.vendor }} · {{ m.base }}</div></td>
-<td><a href="{{ m.process }}.html">{{ process_names[m.process] }}</a></td>
-<td><span class="mcls" style="--c:var(--c-{{ m.class }})">{{ class_labels[m.class] }}</span></td>
-<td class="band">{{ cell(m, "uts") }}</td><td class="band">{{ cell(m, "mod") }}</td><td class="band">{{ cell(m, "elong") }}</td><td class="band">{{ cell(m, "hdt") }}</td>
-<td>{{ m.standard }}</td><td>{{ m.orientation }}</td><td>{{ m.condition }}</td>
-<td><a href="{{ m.tds_url }}" rel="noopener">{{ m.doc }}</a></td></tr>
+<td class="mp" data-label="Process"><a href="{{ m.process }}.html">{{ process_names[m.process] }}</a></td>
+<td class="mc" data-label="Class"><span class="mcls" style="--c:var(--c-{{ m.class }})">{{ class_labels[m.class] }}</span></td>
+<td class="band" data-label="Tensile, MPa">{{ cell(m, "uts") }}</td><td class="band" data-label="Modulus, GPa">{{ cell(m, "mod") }}</td><td class="band" data-label="Elong., %">{{ cell(m, "elong") }}</td><td class="band" data-label="HDT, °C">{{ cell(m, "hdt") }}</td>
+<td class="ms" data-label="Standard">{{ m.standard }}</td><td data-label="Orientation">{{ m.orientation }}</td><td data-label="Condition">{{ m.condition }}</td>
+<td class="msrc" data-label="Source"><a href="{{ m.tds_url }}" rel="noopener">{{ m.doc }}</a></td></tr>
 {% endfor %}</tbody>{% endif %}{% endfor %}</table></div>
 {% if unavailable %}<p class="sub">Unavailable: {% for m in unavailable %}{{ m.grade }} ({{ m.vendor }}){% if not loop.last %}, {% endif %}{% endfor %}. The vendor no longer serves a data sheet for these grades, so they are not plotted.</p>{% endif %}
 <p class="sub">Read from vendor data sheets on {{ grades|map(attribute="as_of")|max }}. Vendors revise sheets; the linked sheet is the authority. Download: <a href="materials.csv">materials.csv</a> (modulus in MPa, as published).</p>
