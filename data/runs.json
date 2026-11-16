@@ -1,21 +1,21 @@
 {
  "accept": {
-  "at": "2026-11-15 18:31 UTC",
+  "at": "2026-11-16 21:40 UTC",
   "auto": 0,
   "dup": 0,
-  "open": 18,
-  "queued": 0
+  "open": 20,
+  "queued": 2
  },
  "news:bing": {
-  "at": "2026-11-15 18:31 UTC",
+  "at": "2026-11-16 21:40 UTC",
   "companies": 44,
   "error_sample": [],
   "errors": 0,
-  "fetched": 655,
-  "kept": 614
+  "fetched": 664,
+  "kept": 621
  },
  "news:gdelt": {
-  "at": "2026-11-15 18:31 UTC",
+  "at": "2026-11-16 21:40 UTC",
   "companies": 0,
   "error_sample": [
    "stratasys: RuntimeError: GDELT rate limit; skipped for the rest of this run"
@@ -25,15 +25,19 @@
   "kept": 0
  },
  "news:gnews": {
-  "at": "2026-11-15 18:31 UTC",
-  "companies": 29,
-  "error_sample": [],
-  "errors": 0,
-  "fetched": 144,
-  "kept": 63
+  "at": "2026-11-16 21:40 UTC",
+  "companies": 20,
+  "error_sample": [
+   "asiga: HTTPError: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22Asiga%22+%28%223D+printing%22+OR+%223D+printer%22+OR+dent",
+   "bambu-lab: HTTPError: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22Bambu+Lab%22+when%3A3d&hl=en-US&gl=US&ceid=US%3Aen",
+   "cobod: HTTPError: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22COBOD%22+when%3A3d&hl=en-US&gl=US&ceid=US%3Aen"
+  ],
+  "errors": 14,
+  "fetched": 123,
+  "kept": 41
  },
  "news:newsroom": {
-  "at": "2026-11-15 18:31 UTC",
+  "at": "2026-11-16 21:40 UTC",
   "companies": 1,
   "error_sample": [],
   "errors": 0,
@@ -41,11 +45,11 @@
   "kept": 1
  },
  "sec": {
-  "at": "2026-11-15 18:23 UTC",
+  "at": "2026-11-16 21:32 UTC",
   "companies": 9,
   "error_sample": [],
   "errors": 0,
-  "fetched": 10,
+  "fetched": 11,
   "kept": 0
  }
 }
