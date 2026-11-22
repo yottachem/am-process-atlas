@@ -1,21 +1,21 @@
 {
  "accept": {
-  "at": "2026-11-21 18:42 UTC",
+  "at": "2026-11-22 19:02 UTC",
   "auto": 0,
   "dup": 0,
-  "open": 28,
+  "open": 29,
   "queued": 1
  },
  "news:bing": {
-  "at": "2026-11-21 18:42 UTC",
+  "at": "2026-11-22 19:02 UTC",
   "companies": 44,
   "error_sample": [],
   "errors": 0,
-  "fetched": 661,
-  "kept": 626
+  "fetched": 652,
+  "kept": 620
  },
  "news:gdelt": {
-  "at": "2026-11-21 18:42 UTC",
+  "at": "2026-11-22 19:02 UTC",
   "companies": 0,
   "error_sample": [
    "3d-systems: RuntimeError: GDELT rate limit; skipped for the rest of this run"
@@ -25,15 +25,15 @@
   "kept": 0
  },
  "news:gnews": {
-  "at": "2026-11-21 18:42 UTC",
-  "companies": 31,
+  "at": "2026-11-22 19:02 UTC",
+  "companies": 26,
   "error_sample": [],
   "errors": 0,
-  "fetched": 196,
-  "kept": 89
+  "fetched": 129,
+  "kept": 40
  },
  "news:newsroom": {
-  "at": "2026-11-21 18:42 UTC",
+  "at": "2026-11-22 19:02 UTC",
   "companies": 0,
   "error_sample": [],
   "errors": 0,
@@ -41,7 +41,7 @@
   "kept": 0
  },
  "sec": {
-  "at": "2026-11-21 18:35 UTC",
+  "at": "2026-11-22 18:56 UTC",
   "companies": 9,
   "error_sample": [],
   "errors": 0,
