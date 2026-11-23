@@ -1,15 +1,31 @@
 {
- "checked": "2026-11-16",
- "n_ok": 138,
- "n_blocked": 14,
- "n_failed": 0,
- "failed": [],
+ "checked": "2026-11-23",
+ "n_ok": 136,
+ "n_blocked": 15,
+ "n_failed": 1,
+ "failed": [
+  {
+   "url": "https://fabrisonic.com/wp-content/uploads/2024/04/SonicLayer-7200-R4.pdf",
+   "status": "ConnectTimeout",
+   "used_by": [
+    "uam"
+   ]
+  }
+ ],
  "blocked": [
   {
    "url": "https://3dprinting.com/metal/cold-metal-fusion-what-is-it",
    "status": 403,
    "used_by": [
     "cmf"
+   ]
+  },
+  {
+   "url": "https://all3dp.com/1/bambu-lab-a1-mini-review/",
+   "status": 403,
+   "used_by": [
+    "bambu-lab",
+    "fff"
    ]
   },
   {

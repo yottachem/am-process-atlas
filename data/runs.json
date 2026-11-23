@@ -1,21 +1,21 @@
 {
  "accept": {
-  "at": "2026-11-22 19:02 UTC",
+  "at": "2026-11-23 23:25 UTC",
   "auto": 0,
   "dup": 0,
   "open": 29,
-  "queued": 1
+  "queued": 0
  },
  "news:bing": {
-  "at": "2026-11-22 19:02 UTC",
+  "at": "2026-11-23 23:25 UTC",
   "companies": 44,
   "error_sample": [],
   "errors": 0,
   "fetched": 652,
-  "kept": 620
+  "kept": 616
  },
  "news:gdelt": {
-  "at": "2026-11-22 19:02 UTC",
+  "at": "2026-11-23 23:25 UTC",
   "companies": 0,
   "error_sample": [
    "3d-systems: RuntimeError: GDELT rate limit; skipped for the rest of this run"
@@ -25,15 +25,19 @@
   "kept": 0
  },
  "news:gnews": {
-  "at": "2026-11-22 19:02 UTC",
-  "companies": 26,
-  "error_sample": [],
-  "errors": 0,
-  "fetched": 129,
-  "kept": 40
+  "at": "2026-11-23 23:25 UTC",
+  "companies": 0,
+  "error_sample": [
+   "3d-systems: HTTPError: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%223D+Systems%22+when%3A3d&hl=en-US&gl=US&ceid=US%3Ae",
+   "anycubic: HTTPError: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%22Anycubic%22+when%3A3d&hl=en-US&gl=US&ceid=US%3Aen",
+   "arc-impact: HTTPError: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%22Arc+Impact%22+%28%223D+printing%22+OR+%22additive+"
+  ],
+  "errors": 45,
+  "fetched": 0,
+  "kept": 0
  },
  "news:newsroom": {
-  "at": "2026-11-22 19:02 UTC",
+  "at": "2026-11-23 23:25 UTC",
   "companies": 0,
   "error_sample": [],
   "errors": 0,
@@ -41,7 +45,7 @@
   "kept": 0
  },
  "sec": {
-  "at": "2026-11-22 18:56 UTC",
+  "at": "2026-11-23 23:15 UTC",
   "companies": 9,
   "error_sample": [],
   "errors": 0,
