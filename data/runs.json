@@ -1,21 +1,21 @@
 {
  "accept": {
-  "at": "2026-11-27 20:41 UTC",
+  "at": "2026-11-28 19:32 UTC",
   "auto": 0,
   "dup": 0,
-  "open": 32,
-  "queued": 0
+  "open": 35,
+  "queued": 3
  },
  "news:bing": {
-  "at": "2026-11-27 20:41 UTC",
+  "at": "2026-11-28 19:32 UTC",
   "companies": 44,
   "error_sample": [],
   "errors": 0,
-  "fetched": 661,
-  "kept": 621
+  "fetched": 666,
+  "kept": 623
  },
  "news:gdelt": {
-  "at": "2026-11-27 20:41 UTC",
+  "at": "2026-11-28 19:32 UTC",
   "companies": 0,
   "error_sample": [
    "3d-systems: RuntimeError: GDELT rate limit; skipped for the rest of this run"
@@ -25,15 +25,18 @@
   "kept": 0
  },
  "news:gnews": {
-  "at": "2026-11-27 20:41 UTC",
-  "companies": 32,
-  "error_sample": [],
-  "errors": 0,
-  "fetched": 213,
-  "kept": 73
+  "at": "2026-11-28 19:32 UTC",
+  "companies": 28,
+  "error_sample": [
+   "spee3d: HTTPError: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22SPEE3D%22+when%3A3d&hl=en-US&gl=US&ceid=US%3Aen",
+   "xact-metal: HTTPError: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22Xact+Metal%22+when%3A3d&hl=en-US&gl=US&ceid=US%3Aen"
+  ],
+  "errors": 2,
+  "fetched": 183,
+  "kept": 54
  },
  "news:newsroom": {
-  "at": "2026-11-27 20:41 UTC",
+  "at": "2026-11-28 19:32 UTC",
   "companies": 0,
   "error_sample": [],
   "errors": 0,
@@ -41,11 +44,11 @@
   "kept": 0
  },
  "sec": {
-  "at": "2026-11-27 20:35 UTC",
+  "at": "2026-11-28 19:27 UTC",
   "companies": 9,
   "error_sample": [],
   "errors": 0,
-  "fetched": 2,
+  "fetched": 1,
   "kept": 0
  }
 }
